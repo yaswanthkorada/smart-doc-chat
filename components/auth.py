@@ -302,22 +302,26 @@ def require_auth(func):
 
 def check_tier_limit(user_id: int, limit_type: str) -> tuple:
     """
-    Check if user has reached tier limit
+    Check if user has reached tier limit - uses Supabase
     Returns: (can_proceed, current_count, limit)
     """
     tier = st.session_state.get('subscription_tier', 'free')
     limits = config.get_tier_limits(tier)
     
     if limit_type == "documents":
-        current_count = len(db_manager.get_user_documents(user_id))
+        # Query documents from Supabase
+        result = supabase.table('documents').select('*').eq('user_id', user_id).execute()
+        current_count = len(result.data) if result.data else 0
         limit = limits["max_documents"]
     elif limit_type == "storage":
-        documents = db_manager.get_user_documents(user_id)
-        current_count = sum(doc.file_size for doc in documents) / (1024 * 1024)  # MB
+        # Query documents and sum file sizes
+        result = supabase.table('documents').select('file_size').eq('user_id', user_id).execute()
+        current_count = sum(doc.get('file_size', 0) for doc in (result.data or [])) / (1024 * 1024)  # MB
         limit = limits["max_storage_mb"]
     elif limit_type == "conversations":
-        conversations = db_manager.get_user_conversations(user_id)
-        current_count = len(conversations)
+        # Query conversations from Supabase
+        result = supabase.table('conversations').select('*').eq('user_id', user_id).execute()
+        current_count = len(result.data) if result.data else 0
         limit = limits["max_conversations"]
     else:
         return True, 0, float('inf')
@@ -327,17 +331,22 @@ def check_tier_limit(user_id: int, limit_type: str) -> tuple:
 
 # Create demo user on first run
 def create_demo_user():
-    """Create demo user if doesn't exist"""
+    """Create demo user if doesn't exist - uses Supabase"""
     try:
-        demo_user = db_manager.get_user_by_username("demo")
-        if not demo_user:
-            db_manager.create_user(
-                email="demo@ragassistant.com",
-                username="demo",
-                password="Demo@123",
-                full_name="Demo User"
-            )
-            logger.info("Demo user created")
+        # Check if demo user exists in Supabase
+        result = supabase.table('users').select('*').eq('username', 'demo').execute()
+        
+        if not result.data or len(result.data) == 0:
+            # Create demo user
+            password_hash = hash_password("Demo@123")
+            supabase.table('users').insert({
+                'email': 'demo@ragassistant.com',
+                'username': 'demo',
+                'password_hash': password_hash,
+                'full_name': 'Demo User',
+                'subscription_tier': 'free'
+            }).execute()
+            logger.info("Demo user created in Supabase")
     except Exception as e:
         logger.error(f"Error creating demo user: {e}")
 
