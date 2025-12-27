@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship, sessionmaker
 from datetime import datetime
 import bcrypt
 import uuid
+import urllib.parse
 from config import config
 from loguru import logger
 
@@ -211,11 +212,41 @@ class DatabaseManager:
         if db_url is None:
             db_url = config.DATABASE_URL
         
-        logger.info(f"Initializing database: {db_url}")
+        # Handle password encoding in PostgreSQL URLs
+        if db_url.startswith("postgresql://"):
+            db_url = self._encode_postgres_password(db_url)
+        
+        logger.info(f"Initializing database: {db_url.replace(db_url.split('@')[0].split(':')[-1], '***') if '@' in db_url else db_url}")
         self.engine = create_engine(db_url, echo=config.DEBUG)
         Base.metadata.create_all(self.engine)
         self.SessionLocal = sessionmaker(bind=self.engine)
         logger.info("Database initialized successfully")
+    
+    def _encode_postgres_password(self, db_url: str) -> str:
+        """Encode password in PostgreSQL URL if it contains special characters"""
+        try:
+            # Parse: postgresql://user:password@host:port/database
+            if "://" not in db_url or "@" not in db_url:
+                return db_url
+            
+            # Split URL into parts
+            protocol, rest = db_url.split("://", 1)
+            credentials, host_db = rest.split("@", 1)
+            
+            if ":" not in credentials:
+                return db_url
+            
+            username, password = credentials.split(":", 1)
+            
+            # Only encode if password contains special characters and isn't already encoded
+            if any(char in password for char in ['@', ':', '/', '?', '#', '[', ']', '%']) and '%' not in password:
+                encoded_password = urllib.parse.quote_plus(password)
+                return f"{protocol}://{username}:{encoded_password}@{host_db}"
+            
+            return db_url
+        except Exception as e:
+            logger.warning(f"Could not encode password in URL: {e}")
+            return db_url
     
     def get_session(self):
         """Get database session"""
