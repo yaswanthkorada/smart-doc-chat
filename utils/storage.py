@@ -1,10 +1,12 @@
 import os
 import shutil
+import uuid
 from pathlib import Path
 from abc import ABC, abstractmethod
 from typing import Optional
 from loguru import logger
 from config import config
+from utils.supabase_client import supabase
 
 class StorageBackend(ABC):
     """Abstract base class for storage backends"""
@@ -214,6 +216,92 @@ class CloudflareR2Storage(StorageBackend):
             logger.error(f"Error listing R2 files: {e}")
             return []
 
+class SupabaseStorage(StorageBackend):
+    """Supabase Storage backend"""
+    
+    def __init__(self):
+        if not supabase:
+            raise ValueError("Supabase client not initialized")
+        self.client = supabase
+        self.bucket_name = os.getenv("SUPABASE_BUCKET", "documents")
+        logger.info(f"SupabaseStorage initialized: {self.bucket_name}")
+    
+    def upload_file(self, file_path: str, user_id: int, filename: str) -> str:
+        """Upload file to Supabase Storage"""
+        try:
+            # Generate unique filename
+            file_ext = Path(filename).suffix
+            unique_name = f"{uuid.uuid4()}{file_ext}"
+            storage_path = f"{user_id}/{unique_name}"
+            
+            # Read file content
+            with open(file_path, 'rb') as f:
+                file_content = f.read()
+            
+            # Upload to Supabase
+            response = self.client.storage.from_(self.bucket_name).upload(
+                storage_path,
+                file_content,
+                file_options={"content-type": self._get_content_type(filename)}
+            )
+            
+            storage_url = f"supabase://{self.bucket_name}/{storage_path}"
+            logger.info(f"File uploaded to Supabase: {storage_url}")
+            return storage_url
+        except Exception as e:
+            logger.error(f"Error uploading to Supabase: {e}")
+            raise e
+    
+    def download_file(self, storage_url: str, local_path: str) -> bool:
+        """Download file from Supabase Storage"""
+        try:
+            storage_path = storage_url.replace(f"supabase://{self.bucket_name}/", "")
+            response = self.client.storage.from_(self.bucket_name).download(storage_path)
+            
+            with open(local_path, 'wb') as f:
+                f.write(response)
+            
+            logger.info(f"File downloaded from Supabase: {storage_url}")
+            return True
+        except Exception as e:
+            logger.error(f"Error downloading from Supabase: {e}")
+            return False
+    
+    def delete_file(self, storage_url: str) -> bool:
+        """Delete file from Supabase Storage"""
+        try:
+            storage_path = storage_url.replace(f"supabase://{self.bucket_name}/", "")
+            self.client.storage.from_(self.bucket_name).remove([storage_path])
+            logger.info(f"File deleted from Supabase: {storage_url}")
+            return True
+        except Exception as e:
+            logger.error(f"Error deleting from Supabase: {e}")
+            return False
+    
+    def list_user_files(self, user_id: int) -> list:
+        """List all files for a user in Supabase Storage"""
+        try:
+            prefix = f"{user_id}/"
+            response = self.client.storage.from_(self.bucket_name).list(prefix)
+            return [f"supabase://{self.bucket_name}/{prefix}{obj['name']}" for obj in response]
+        except Exception as e:
+            logger.error(f"Error listing Supabase files: {e}")
+            return []
+    
+    def _get_content_type(self, filename: str) -> str:
+        """Get content type based on file extension"""
+        ext = Path(filename).suffix.lower()
+        content_types = {
+            '.pdf': 'application/pdf',
+            '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            '.doc': 'application/msword',
+            '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            '.txt': 'text/plain',
+            '.csv': 'text/csv'
+        }
+        return content_types.get(ext, 'application/octet-stream')
+
 class StorageFactory:
     """Factory to get appropriate storage backend"""
     
@@ -228,6 +316,8 @@ class StorageFactory:
             return S3Storage()
         elif storage_type == "r2":
             return CloudflareR2Storage()
+        elif storage_type == "supabase":
+            return SupabaseStorage()
         else:
             logger.warning(f"Unknown storage type: {storage_type}, defaulting to local")
             return LocalStorage()

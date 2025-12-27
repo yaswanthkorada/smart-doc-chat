@@ -1,8 +1,13 @@
 import streamlit as st
 import re
-from utils.database import db_manager
+import hashlib
+from utils.supabase_client import supabase
 from config import config
 from loguru import logger
+
+def hash_password(password: str) -> str:
+    """Hash password using SHA256"""
+    return hashlib.sha256(password.encode()).hexdigest()
 
 def validate_email(email: str) -> bool:
     """Validate email format"""
@@ -32,7 +37,7 @@ def validate_password(password: str) -> tuple:
     return True, "Password is strong"
 
 def login_page():
-    """Login interface"""
+    """Login interface with Supabase"""
     st.title("🔐 Login to RAG Assistant")
     
     with st.form("login_form"):
@@ -52,23 +57,33 @@ def login_page():
                 return False
             
             try:
-                user = db_manager.get_user_by_username(username)
+                if not supabase:
+                    st.error("Database connection not available")
+                    return False
                 
-                if user and user.check_password(password):
-                    if not user.is_active:
+                password_hash = hash_password(password)
+                
+                # Query user from Supabase
+                response = supabase.table('users').select('*').eq('username', username).eq('password_hash', password_hash).execute()
+                
+                if response.data and len(response.data) > 0:
+                    user = response.data[0]
+                    
+                    if not user.get('is_active', True):
                         st.error("❌ Account is deactivated. Please contact support.")
                         return False
                     
                     # Update last login
-                    db_manager.update_last_login(user.id)
+                    supabase.table('users').update({
+                        'last_login': 'now()'
+                    }).eq('id', user['id']).execute()
                     
                     # Set session state
                     st.session_state.authenticated = True
-                    st.session_state.user_id = user.id
-                    st.session_state.username = user.username
-                    st.session_state.user_email = user.email
-                    st.session_state.subscription_tier = user.subscription_tier
-                    st.session_state.full_name = user.full_name
+                    st.session_state.user_id = user['id']
+                    st.session_state.username = user['username']
+                    st.session_state.user_email = user['email']
+                    st.session_state.full_name = user.get('full_name', '')
                     
                     logger.info(f"User logged in: {username}")
                     st.success("✅ Login successful!")
@@ -149,30 +164,41 @@ def signup_page():
                 return False
             
             try:
+                if not supabase:
+                    st.error("Database connection not available")
+                    return False
+                
                 # Check if username exists
-                existing_user = db_manager.get_user_by_username(username)
-                if existing_user:
+                check_username = supabase.table('users').select('id').eq('username', username).execute()
+                if check_username.data and len(check_username.data) > 0:
                     st.error("Username already exists. Please choose another.")
                     return False
                 
                 # Check if email exists
-                existing_email = db_manager.get_user_by_email(email)
-                if existing_email:
+                check_email = supabase.table('users').select('id').eq('email', email).execute()
+                if check_email.data and len(check_email.data) > 0:
                     st.error("Email already registered. Please login or use another email.")
                     return False
                 
                 # Create user
-                user = db_manager.create_user(
-                    email=email,
-                    username=username,
-                    password=password,
-                    full_name=full_name
-                )
+                password_hash = hash_password(password)
+                user_data = {
+                    'username': username,
+                    'email': email,
+                    'password_hash': password_hash,
+                    'full_name': full_name if full_name else None
+                }
                 
-                logger.info(f"New user created: {username}")
-                st.success("✅ Account created successfully! Please login.")
-                st.balloons()
-                return True
+                response = supabase.table('users').insert(user_data).execute()
+                
+                if response.data:
+                    logger.info(f"New user created: {username}")
+                    st.success("✅ Account created successfully! Please login.")
+                    st.balloons()
+                    return True
+                else:
+                    st.error("Error creating account. Please try again.")
+                    return False
                 
             except Exception as e:
                 logger.error(f"Signup error: {e}")
