@@ -27,6 +27,88 @@ try:
 except FileNotFoundError:
     pass
 
+# Add custom floating sidebar toggle button with JavaScript
+st.markdown("""
+<style>
+/* Floating sidebar toggle - always visible */
+.floating-sidebar-toggle {
+    position: fixed;
+    top: 70px;
+    left: 16px;
+    z-index: 999999;
+    background: white;
+    border: 2px solid #3B82F6;
+    border-radius: 10px;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    color: #111827;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    transition: all 0.3s ease;
+    user-select: none;
+}
+.floating-sidebar-toggle:hover {
+    background: #3B82F6;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+}
+.floating-sidebar-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Ensure it's above everything */
+.floating-sidebar-toggle {
+    pointer-events: all !important;
+}
+</style>
+
+<div class="floating-sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
+    ☰
+</div>
+
+<script>
+function toggleSidebar() {
+    // Method 1: Try to click Streamlit's native toggle
+    const streamlitToggle = document.querySelector('button[kind="header"]') || 
+                           document.querySelector('button[data-testid="collapsedControl"]') ||
+                           document.querySelector('[data-testid="baseButton-header"]');
+    
+    if (streamlitToggle) {
+        streamlitToggle.click();
+        return;
+    }
+    
+    // Method 2: Toggle sidebar visibility directly
+    const sidebar = document.querySelector('[data-testid="stSidebar"]');
+    if (sidebar) {
+        const isCollapsed = sidebar.getAttribute('aria-expanded') === 'false' || 
+                          window.getComputedStyle(sidebar).marginLeft.startsWith('-');
+        
+        if (isCollapsed) {
+            sidebar.style.marginLeft = '0';
+            sidebar.setAttribute('aria-expanded', 'true');
+        } else {
+            sidebar.style.marginLeft = '-21rem';
+            sidebar.setAttribute('aria-expanded', 'false');
+        }
+    }
+}
+
+// Also make sure the floating button is always on top
+document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('.floating-sidebar-toggle');
+    if (toggle) {
+        document.body.appendChild(toggle);
+    }
+});
+</script>
+""", unsafe_allow_html=True)
+
 # Custom CSS (legacy - can be removed once styles.css is confirmed working)
 st.markdown("""
     <style>

@@ -470,6 +470,20 @@ audio {
     color: white !important;
 }
 
+/* Dropdown arrow icon */
+[data-testid="stSidebar"] [data-baseweb="select"] svg {
+    fill: white !important;
+    color: white !important;
+}
+
+/* AI Provider section heading */
+[data-testid="stSidebar"] h3,
+[data-testid="stSidebar"] .stMarkdown h3 {
+    color: white !important;
+    font-weight: 600 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
 /* Sidebar captions - ensure white text */
 [data-testid="stSidebar"] .stCaption,
 [data-testid="stSidebar"] p,
@@ -490,7 +504,8 @@ audio {
 button[kind="header"],
 button[data-testid="collapsedControl"],
 button[aria-label*="sidebar"],
-button[aria-label*="Sidebar"] {
+button[aria-label*="Sidebar"],
+[data-testid="baseButton-header"] {
     background-color: var(--bg-white) !important;
     color: var(--text-dark) !important;
     border: 2px solid var(--primary-blue) !important;
@@ -508,12 +523,16 @@ button[aria-label*="Sidebar"] {
     min-height: 40px !important;
     cursor: pointer !important;
     transition: all 0.3s ease !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: all !important;
 }
 
 button[kind="header"]:hover,
 button[data-testid="collapsedControl"]:hover,
 button[aria-label*="sidebar"]:hover,
-button[aria-label*="Sidebar"]:hover {
+button[aria-label*="Sidebar"]:hover,
+[data-testid="baseButton-header"]:hover {
     background-color: var(--primary-blue) !important;
     color: white !important;
     border-color: var(--primary-hover) !important;
@@ -523,17 +542,21 @@ button[aria-label*="Sidebar"]:hover {
 
 /* Ensure toggle button icon is visible */
 button[kind="header"] svg,
-button[data-testid="collapsedControl"] svg {
+button[data-testid="collapsedControl"] svg,
+[data-testid="baseButton-header"] svg {
     width: 20px !important;
     height: 20px !important;
     fill: currentColor !important;
 }
 
 /* Force visibility when sidebar is collapsed */
-[data-testid="collapsedControl"] {
+[data-testid="collapsedControl"],
+button[aria-label*="Open sidebar"],
+button[aria-label*="open sidebar"] {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: all !important;
+    display: flex !important;
 }
 
 /* === PIN/CONTEXT MENU DROPDOWN === */
