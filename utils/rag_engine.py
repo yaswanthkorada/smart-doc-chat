@@ -626,9 +626,9 @@ Be concise but thorough. Focus on information that would be useful for answering
             
             # Update document status
             db_manager.update_document_status(
-                doc_id=doc_id,
-                status="completed",
-                num_chunks=len(chunks)
+                document_id=doc_id,
+                processed=True,
+                chunk_count=len(chunks)
             )
             
             logger.info(f"YouTube video processed successfully: {doc_id}")
@@ -719,9 +719,9 @@ Be concise but thorough. Focus on information that would be useful for answering
             
             # Update document status
             db_manager.update_document_status(
-                doc_id=doc_id,
-                status="completed",
-                num_chunks=len(chunks)
+                document_id=doc_id,
+                processed=True,
+                chunk_count=len(chunks)
             )
             
             logger.info(f"Website processed successfully: {doc_id}")
@@ -740,9 +740,9 @@ Be concise but thorough. Focus on information that would be useful for answering
             # Update document status to failed
             if doc_id:
                 db_manager.update_document_status(
-                    doc_id=doc_id,
-                    status="failed",
-                    error_message=str(e)
+                    document_id=doc_id,
+                    processed=False,
+                    metadata=str(e)
                 )
             
             raise e
@@ -829,9 +829,9 @@ Be concise but thorough. Focus on information that would be useful for answering
             
             # Update document status
             db_manager.update_document_status(
-                doc_id=doc_id,
-                status="completed",
-                num_chunks=len(chunks)
+                document_id=doc_id,
+                processed=True,
+                chunk_count=len(chunks)
             )
             
             logger.info(f"Document processed successfully: {doc_id}")
@@ -850,9 +850,9 @@ Be concise but thorough. Focus on information that would be useful for answering
             # Update document status to failed
             if doc_id:
                 db_manager.update_document_status(
-                    doc_id=doc_id,
-                    status="failed",
-                    error_message=str(e)
+                    document_id=doc_id,
+                    processed=False,
+                    metadata=str(e)
                 )
             
             raise e
