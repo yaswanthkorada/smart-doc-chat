@@ -989,12 +989,34 @@ Be concise but thorough. Focus on information that would be useful for answering
 
     def _query_with_openai(self, query: str, vectorstore, chat_history: List, top_k: int) -> Dict:
         """Query using OpenAI API"""
-        qa_chain = ConversationalRetrievalChain.from_llm(
+        from langchain.chains.question_answering import load_qa_chain
+        from langchain.chains import LLMChain
+        from langchain.prompts import PromptTemplate
+        
+        # Create a custom condenser chain with our LLM (no temperature override)
+        condense_question_prompt = PromptTemplate(
+            template="""Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in its original language.
+
+Chat History:
+{chat_history}
+Follow Up Input: {question}
+Standalone question:""",
+            input_variables=["chat_history", "question"]
+        )
+        
+        question_generator = LLMChain(
             llm=self.llm,
+            prompt=condense_question_prompt
+        )
+        
+        # Create the conversational retrieval chain with custom question generator
+        qa_chain = ConversationalRetrievalChain(
             retriever=vectorstore.as_retriever(
                 search_type="similarity",
                 search_kwargs={"k": top_k}
             ),
+            question_generator=question_generator,
+            combine_docs_chain=load_qa_chain(self.llm, chain_type="stuff"),
             return_source_documents=True,
             verbose=config.DEBUG
         )
