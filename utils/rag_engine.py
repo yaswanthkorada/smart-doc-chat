@@ -156,7 +156,6 @@ class RAGEngine:
             
             try:
                 self.llm = ChatOpenAI(
-                    temperature=0.7,
                     model=config.OPENAI_MODEL,
                     api_key=config.OPENAI_API_KEY
                 )
@@ -164,7 +163,6 @@ class RAGEngine:
             except TypeError:
                 # Fallback for older versions
                 self.llm = ChatOpenAI(
-                    temperature=0.7,
                     model_name=config.OPENAI_MODEL,
                     openai_api_key=config.OPENAI_API_KEY
                 )
@@ -216,7 +214,6 @@ class RAGEngine:
                         api_key=config.OPENAI_API_KEY
                     )
                     self.llm = ChatOpenAI(
-                        temperature=0.7,
                         model=config.OPENAI_MODEL,
                         api_key=config.OPENAI_API_KEY
                     )
@@ -226,7 +223,6 @@ class RAGEngine:
                         openai_api_key=config.OPENAI_API_KEY
                     )
                     self.llm = ChatOpenAI(
-                        temperature=0.7,
                         model_name=config.OPENAI_MODEL,
                         openai_api_key=config.OPENAI_API_KEY
                     )
