@@ -411,14 +411,33 @@ audio {
     background-color: rgba(255, 255, 255, 0.15) !important;
     color: white !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    padding: 6px 12px !important;
+    font-size: 13px !important;
 }
 
 [data-testid="stSidebar"] .stButton button:hover {
     background-color: rgba(255, 255, 255, 0.25) !important;
 }
 
+/* Fix AI Provider dropdown and labels */
 [data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {
     background-color: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+}
+
+[data-testid="stSidebar"] .stSelectbox label {
+    color: white !important;
+    font-weight: 500 !important;
+}
+
+[data-testid="stSidebar"] [data-baseweb="select"] span {
+    color: white !important;
+}
+
+/* Sidebar captions - ensure white text */
+[data-testid="stSidebar"] .stCaption,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] span {
     color: white !important;
 }
 
@@ -429,6 +448,27 @@ audio {
 
 [data-testid="stSidebar"] input::placeholder {
     color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Sidebar toggle button - always visible */
+button[kind="header"],
+button[data-testid="collapsedControl"] {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 6px !important;
+    padding: 8px !important;
+    box-shadow: var(--shadow-md) !important;
+    position: fixed !important;
+    top: 10px !important;
+    left: 10px !important;
+    z-index: 999999 !important;
+}
+
+button[kind="header"]:hover,
+button[data-testid="collapsedControl"]:hover {
+    background-color: var(--bg-hover) !important;
+    border-color: var(--primary-blue) !important;
 }
 
 /* === PIN/CONTEXT MENU DROPDOWN === */
