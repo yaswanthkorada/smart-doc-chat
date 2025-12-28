@@ -989,43 +989,76 @@ Be concise but thorough. Focus on information that would be useful for answering
 
     def _query_with_openai(self, query: str, vectorstore, chat_history: List, top_k: int) -> Dict:
         """Query using OpenAI API"""
-        from langchain.chains.question_answering import load_qa_chain
         from langchain.chains import LLMChain
         from langchain.prompts import PromptTemplate
+        from langchain.chains.combine_documents.stuff import StuffDocumentsChain
         
-        # Create a custom condenser chain with our LLM (no temperature override)
-        condense_question_prompt = PromptTemplate(
-            template="""Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in its original language.
+        # Get relevant documents
+        retriever = vectorstore.as_retriever(
+            search_type="similarity",
+            search_kwargs={"k": top_k}
+        )
+        
+        # Condense question if there's chat history
+        if chat_history:
+            condense_question_prompt = PromptTemplate(
+                template="""Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in its original language.
 
 Chat History:
 {chat_history}
 Follow Up Input: {question}
 Standalone question:""",
-            input_variables=["chat_history", "question"]
+                input_variables=["chat_history", "question"]
+            )
+            
+            question_generator = LLMChain(
+                llm=self.llm,
+                prompt=condense_question_prompt
+            )
+            
+            # Format chat history
+            chat_history_str = "\n".join([f"Human: {h[0]}\nAssistant: {h[1]}" for h in chat_history])
+            standalone_question = question_generator.run(
+                chat_history=chat_history_str,
+                question=query
+            )
+        else:
+            standalone_question = query
+        
+        # Get relevant documents
+        docs = retriever.get_relevant_documents(standalone_question)
+        
+        # Create QA prompt
+        qa_prompt = PromptTemplate(
+            template="""Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+
+{context}
+
+Question: {question}
+Helpful Answer:""",
+            input_variables=["context", "question"]
         )
         
-        question_generator = LLMChain(
-            llm=self.llm,
-            prompt=condense_question_prompt
+        # Create document chain
+        doc_prompt = PromptTemplate(
+            template="{page_content}",
+            input_variables=["page_content"]
         )
         
-        # Create the conversational retrieval chain with custom question generator
-        qa_chain = ConversationalRetrievalChain(
-            retriever=vectorstore.as_retriever(
-                search_type="similarity",
-                search_kwargs={"k": top_k}
-            ),
-            question_generator=question_generator,
-            combine_docs_chain=load_qa_chain(self.llm, chain_type="stuff"),
-            return_source_documents=True,
-            verbose=config.DEBUG
+        llm_chain = LLMChain(llm=self.llm, prompt=qa_prompt)
+        stuff_chain = StuffDocumentsChain(
+            llm_chain=llm_chain,
+            document_variable_name="context",
+            document_prompt=doc_prompt
         )
         
-        result = qa_chain({
-            "question": query,
-            "chat_history": chat_history
-        })
-        return result
+        # Run the chain
+        answer = stuff_chain.run(input_documents=docs, question=standalone_question)
+        
+        return {
+            "answer": answer,
+            "source_documents": docs
+        }
     
     def _query_with_gemini(self, query: str, vectorstore, chat_history: List, top_k: int) -> Dict:
         """Query using Gemini API"""
