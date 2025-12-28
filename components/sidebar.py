@@ -122,7 +122,7 @@ def render_sidebar():
                 # Show latest 3 documents
                 st.caption(f"📄 Recent Files ({len(user_docs)} total)")
                 for doc in user_docs[:3]:
-                    status_emoji = "✅" if doc.status == "completed" else "⏳" if doc.status == "processing" else "❌"
+                    status_emoji = "✅" if doc.processed else "⏳"  # processed=True means completed
                     file_size = doc.file_size / 1024  # KB
                     st.caption(f"{status_emoji} {doc.filename[:20]}{'...' if len(doc.filename) > 20 else ''} ({file_size:.1f}KB)")
                 

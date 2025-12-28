@@ -245,7 +245,12 @@ def documents_page():
         documents = [d for d in documents if search.lower() in d.filename.lower()]
     
     if filter_status != "All":
-        documents = [d for d in documents if d.status.lower() == filter_status.lower()]
+        # Map filter status to processed boolean
+        if filter_status.lower() == "completed":
+            documents = [d for d in documents if d.processed]
+        elif filter_status.lower() == "processing":
+            documents = [d for d in documents if not d.processed]
+        # Note: "failed" status no longer exists, failed docs show as not processed
     
     if documents:
         for doc in documents:

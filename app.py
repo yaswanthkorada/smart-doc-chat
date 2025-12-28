@@ -507,7 +507,7 @@ def main():
     # Multi-document selector
     user_id = st.session_state.get('user_id')
     documents = db_manager.get_user_documents(user_id)
-    completed_docs = [d for d in documents if d.status == "completed"]
+    completed_docs = [d for d in documents if d.processed]  # processed=True means completed
     
     if completed_docs:
         with st.expander("🔍 Select Documents to Query (Optional - default: all documents)", expanded=False):

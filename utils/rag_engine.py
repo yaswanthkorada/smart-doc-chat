@@ -975,7 +975,7 @@ Be concise but thorough. Focus on information that would be useful for answering
             
             by_status = {}
             for doc in documents:
-                status = doc.status
+                status = "completed" if doc.processed else "processing"  # Convert boolean to status string
                 by_status[status] = by_status.get(status, 0) + 1
             
             return {
