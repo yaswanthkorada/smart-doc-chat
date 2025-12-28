@@ -33,6 +33,13 @@ header[data-testid="stHeader"] {
     color: var(--text-dark) !important;
 }
 
+/* Add padding to main content area to prevent overlap with toggle button */
+.main .block-container {
+    padding-top: 1rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
 /* === TEXT INPUTS === */
 [data-testid="stTextInput"] input,
 [data-testid="stPasswordInput"] input,
@@ -266,16 +273,24 @@ button[kind="tertiary"]:hover {
     background-color: var(--bg-white) !important;
     border: 1px solid var(--border-gray) !important;
     border-radius: 6px !important;
-    padding: 6px 8px !important;
-    max-width: 200px !important;
+    padding: 4px 6px !important;
+    max-width: 150px !important;
+    height: auto !important;
 }
 
 [data-testid="stAudioInput"] button {
     background-color: var(--bg-white) !important;
     color: var(--text-dark) !important;
     border: 1px solid var(--border-gray) !important;
-    padding: 4px 8px !important;
-    font-size: 12px !important;
+    padding: 2px 6px !important;
+    font-size: 11px !important;
+    min-height: 28px !important;
+    height: 28px !important;
+}
+
+[data-testid="stAudioInput"] button svg {
+    width: 14px !important;
+    height: 14px !important;
 }
 
 [data-testid="stAudioInput"] button:hover {
@@ -284,13 +299,19 @@ button[kind="tertiary"]:hover {
 
 /* Voice input audio element */
 audio {
-    max-height: 32px !important;
+    max-height: 28px !important;
+    height: 28px !important;
     background-color: var(--bg-white) !important;
 }
 
 /* Voice caption text */
 [data-testid="stAudioInput"] + div {
-    font-size: 12px !important;
+    font-size: 11px !important;
+}
+
+/* Voice timer text */
+[data-testid="stAudioInput"] span {
+    font-size: 11px !important;
 }
 
 /* === TOOLTIPS === */
@@ -411,8 +432,10 @@ audio {
     background-color: rgba(255, 255, 255, 0.15) !important;
     color: white !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    padding: 6px 12px !important;
-    font-size: 13px !important;
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+    min-height: 32px !important;
+    height: 32px !important;
 }
 
 [data-testid="stSidebar"] .stButton button:hover {
@@ -421,16 +444,29 @@ audio {
 
 /* Fix AI Provider dropdown and labels */
 [data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {
-    background-color: rgba(255, 255, 255, 0.2) !important;
+    background-color: rgba(255, 255, 255, 0.25) !important;
     color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
 [data-testid="stSidebar"] .stSelectbox label {
     color: white !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
 }
 
 [data-testid="stSidebar"] [data-baseweb="select"] span {
+    color: white !important;
+    font-weight: 500 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Ensure selected value in dropdown is always white */
+[data-testid="stSidebar"] [data-baseweb="select"] div[data-baseweb="select-value"] {
+    color: white !important;
+}
+
+[data-testid="stSidebar"] [data-baseweb="select"] div[data-baseweb="select-value"] span {
     color: white !important;
 }
 
@@ -450,25 +486,54 @@ audio {
     color: rgba(255, 255, 255, 0.6) !important;
 }
 
-/* Sidebar toggle button - always visible */
+/* Sidebar toggle button - always visible and accessible */
 button[kind="header"],
-button[data-testid="collapsedControl"] {
+button[data-testid="collapsedControl"],
+button[aria-label*="sidebar"],
+button[aria-label*="Sidebar"] {
     background-color: var(--bg-white) !important;
     color: var(--text-dark) !important;
-    border: 1px solid var(--border-gray) !important;
-    border-radius: 6px !important;
-    padding: 8px !important;
-    box-shadow: var(--shadow-md) !important;
+    border: 2px solid var(--primary-blue) !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     position: fixed !important;
-    top: 10px !important;
-    left: 10px !important;
+    top: 12px !important;
+    left: 12px !important;
     z-index: 999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
 }
 
 button[kind="header"]:hover,
-button[data-testid="collapsedControl"]:hover {
-    background-color: var(--bg-hover) !important;
-    border-color: var(--primary-blue) !important;
+button[data-testid="collapsedControl"]:hover,
+button[aria-label*="sidebar"]:hover,
+button[aria-label*="Sidebar"]:hover {
+    background-color: var(--primary-blue) !important;
+    color: white !important;
+    border-color: var(--primary-hover) !important;
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4) !important;
+    transform: scale(1.05) !important;
+}
+
+/* Ensure toggle button icon is visible */
+button[kind="header"] svg,
+button[data-testid="collapsedControl"] svg {
+    width: 20px !important;
+    height: 20px !important;
+    fill: currentColor !important;
+}
+
+/* Force visibility when sidebar is collapsed */
+[data-testid="collapsedControl"] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: all !important;
 }
 
 /* === PIN/CONTEXT MENU DROPDOWN === */
