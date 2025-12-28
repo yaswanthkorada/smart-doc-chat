@@ -262,22 +262,35 @@ button[kind="tertiary"]:hover {
 
 /* === VOICE INPUT BOX === */
 [data-testid="stAudioInput"],
-.stAudioInput,
-audio {
+.stAudioInput {
     background-color: var(--bg-white) !important;
     border: 1px solid var(--border-gray) !important;
-    border-radius: 8px !important;
-    padding: 12px !important;
+    border-radius: 6px !important;
+    padding: 6px 8px !important;
+    max-width: 200px !important;
 }
 
 [data-testid="stAudioInput"] button {
     background-color: var(--bg-white) !important;
     color: var(--text-dark) !important;
     border: 1px solid var(--border-gray) !important;
+    padding: 4px 8px !important;
+    font-size: 12px !important;
 }
 
 [data-testid="stAudioInput"] button:hover {
     background-color: var(--bg-hover) !important;
+}
+
+/* Voice input audio element */
+audio {
+    max-height: 32px !important;
+    background-color: var(--bg-white) !important;
+}
+
+/* Voice caption text */
+[data-testid="stAudioInput"] + div {
+    font-size: 12px !important;
 }
 
 /* === TOOLTIPS === */
@@ -533,6 +546,48 @@ button[aria-label*="Logout"]:hover {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-gray);
+}
+
+/* === NAVIGATION MENU (for collapsed sidebar) === */
+.nav-menu {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    background-color: var(--bg-white);
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: var(--shadow-md);
+    z-index: 1001;
+    display: flex;
+    gap: 8px;
+}
+
+.nav-menu a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    background-color: var(--bg-white);
+    color: var(--text-dark);
+    text-decoration: none;
+    border: 1px solid var(--border-gray);
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.nav-menu a:hover {
+    background-color: var(--bg-hover);
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+.nav-menu a.active {
+    background-color: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
 }
 
 /* === DEVELOPER CREDIT === */

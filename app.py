@@ -442,6 +442,15 @@ st.markdown("""
 def main():
     """Main application"""
     
+    # Navigation menu (accessible even when sidebar is collapsed)
+    st.markdown("""
+    <div class="nav-menu">
+        <a href="/" class="active" title="Chat">🤖 Chat</a>
+        <a href="/Documents" title="Documents">📁 Documents</a>
+        <a href="/Settings" title="Settings">⚙️ Settings</a>
+    </div>
+    """, unsafe_allow_html=True)
+    
     # Render sidebar
     render_sidebar()
     
@@ -551,7 +560,7 @@ def main():
     render_chat_history(messages)
     
     # Voice input option
-    col1, col2 = st.columns([6, 1])
+    col1, col2 = st.columns([10, 2])
     with col2:
         st.caption("🎤 Voice")
         audio_input = st.audio_input("Record your question", key="voice_input", label_visibility="collapsed")
