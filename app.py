@@ -514,8 +514,8 @@ def main():
             st.markdown("**Select specific documents to focus your search:**")
             selected_docs = st.multiselect(
                 "Documents",
-                options=[d.doc_id for d in completed_docs],
-                format_func=lambda x: next((d.filename for d in completed_docs if d.doc_id == x), x),
+                options=[str(d.id) for d in completed_docs],
+                format_func=lambda x: next((d.filename for d in completed_docs if str(d.id) == x), x),
                 help="Select one or more documents to search across. Leave empty to search all documents.",
                 key="selected_documents"
             )

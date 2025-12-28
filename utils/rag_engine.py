@@ -933,7 +933,7 @@ Be concise but thorough. Focus on information that would be useful for answering
             
             # Get document metadata
             documents = db_manager.get_user_documents(user_id)
-            document = next((d for d in documents if d.doc_id == doc_id), None)
+            document = next((d for d in documents if str(d.id) == doc_id), None)
             
             if not document:
                 logger.warning(f"Document not found: {doc_id}")
@@ -1061,7 +1061,7 @@ Please provide a detailed answer based on the documents. If the answer is not in
             
             # Get document metadata
             documents = db_manager.get_user_documents(user_id)
-            document = next((d for d in documents if d.doc_id == doc_id), None)
+            document = next((d for d in documents if str(d.id) == doc_id), None)
             
             if not document:
                 raise ValueError(f"Document not found: {doc_id}")
