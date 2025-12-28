@@ -604,7 +604,7 @@ def analytics_tab():
                     documents = db_manager.get_user_documents(user_id)
                     doc_names = []
                     for doc_id in doc_ids:
-                        doc = next((d for d in documents if d.doc_id == doc_id), None)
+                        doc = next((d for d in documents if str(d.id) == doc_id), None)
                         if doc:
                             doc_names.append(doc.filename)
                     

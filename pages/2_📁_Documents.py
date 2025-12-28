@@ -324,14 +324,11 @@ def process_uploaded_files(uploaded_files, user_id):
 def render_document_card(doc, user_id):
     """Render a document card"""
     
-    # Status emoji and color
-    status_config = {
-        "completed": {"emoji": "✅", "color": "green"},
-        "processing": {"emoji": "⏳", "color": "orange"},
-        "failed": {"emoji": "❌", "color": "red"}
-    }
-    
-    status_info = status_config.get(doc.status.lower(), {"emoji": "❓", "color": "gray"})
+    # Status emoji and color based on processed boolean
+    if doc.processed:
+        status_info = {"emoji": "✅", "color": "green", "text": "Completed"}
+    else:
+        status_info = {"emoji": "⏳", "color": "orange", "text": "Processing"}
     
     with st.container():
         col1, col2, col3, col4, col5, col6, col7 = st.columns([3, 2, 1, 1, 1, 1, 1])
@@ -351,34 +348,34 @@ def render_document_card(doc, user_id):
             st.markdown(f"**{icon} {doc.filename}**")
         
         with col2:
-            size_mb = doc.file_size / (1024 * 1024)
-            st.text(f"Size: {size_mb:.2f} MB")
+            if doc.file_size:
+                size_mb = doc.file_size / (1024 * 1024)
+                st.text(f"Size: {size_mb:.2f} MB")
+            else:
+                st.text("Size: N/A")
         
         with col3:
-            st.markdown(f":{status_info['color']}[{status_info['emoji']} {doc.status.title()}]")
+            st.markdown(f":{status_info['color']}[{status_info['emoji']} {status_info['text']}]")
         
         with col4:
-            st.text(f"📊 {doc.num_chunks} chunks")
+            st.text(f"📊 {doc.chunk_count} chunks")
         
         with col5:
-            if doc.status == "completed" and st.button("📝", key=f"summary_{doc.id}", help="Generate Summary"):
-                generate_summary(doc.doc_id, doc.filename, user_id)
+            if doc.processed and st.button("📝", key=f"summary_{doc.id}", help="Generate Summary"):
+                generate_summary(str(doc.id), doc.filename, user_id)
         
         with col6:
             # Convert to PPT button (only for PDF, DOCX, TXT)
             file_ext = doc.filename.split('.')[-1].lower()
-            if doc.status == "completed" and file_ext in ['pdf', 'docx', 'txt']:
+            if doc.processed and file_ext in ['pdf', 'docx', 'txt']:
                 if st.button("📊", key=f"ppt_{doc.id}", help="Convert to PowerPoint"):
-                    convert_to_ppt(doc.doc_id, doc.filename, user_id)
+                    convert_to_ppt(str(doc.id), doc.filename, user_id)
         
         with col7:
             if st.button("🗑️", key=f"delete_{doc.id}", help="Delete document"):
-                delete_document(doc.doc_id, user_id)
+                delete_document(str(doc.id), user_id)
         
         st.caption(f"Uploaded: {doc.upload_date.strftime('%b %d, %Y %I:%M %p')}")
-        
-        if doc.status == "failed" and doc.error_message:
-            st.error(f"Error: {doc.error_message}")
         
         st.divider()
 

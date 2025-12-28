@@ -150,16 +150,15 @@ class Document(Base):
     __tablename__ = 'documents'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    doc_id = Column(String(100), unique=True, nullable=False, index=True)
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
-    filename = Column(String(500), nullable=False)
-    file_size = Column(Integer)
+    filename = Column(String(255), nullable=False)
     file_type = Column(String(50))
-    storage_url = Column(String(1000))
-    num_chunks = Column(Integer, default=0)
+    file_size = Column(Integer)
+    file_path = Column(Text)
     upload_date = Column(DateTime, default=datetime.utcnow)
-    status = Column(String(50), default='processing')  # processing, completed, failed
-    error_message = Column(Text)
+    processed = Column(Boolean, default=False)
+    chunk_count = Column(Integer, default=0)
+    metadata = Column(Text)  # JSONB stored as text for SQLAlchemy compatibility
     
     # Relationships
     user = relationship("User", back_populates="documents")
@@ -168,13 +167,14 @@ class Document(Base):
         """Convert to dictionary"""
         return {
             "id": str(self.id),
-            "doc_id": self.doc_id,
             "filename": self.filename,
             "file_size": self.file_size,
             "file_type": self.file_type,
-            "num_chunks": self.num_chunks,
+            "file_path": self.file_path,
+            "chunk_count": self.chunk_count,
             "upload_date": self.upload_date.isoformat() if self.upload_date else None,
-            "status": self.status
+            "processed": self.processed,
+            "metadata": self.metadata
         }
 
 class QueryAnalytics(Base):
@@ -603,24 +603,25 @@ class DatabaseManager:
     
     # ==================== DOCUMENT OPERATIONS ====================
     
-    def add_document(self, user_id: Union[str, uuid.UUID], doc_id: str, filename: str, 
-                    file_size: int, file_type: str, storage_url: str):
+    def add_document(self, user_id: Union[str, uuid.UUID], filename: str, 
+                    file_size: int, file_type: str, file_path: str):
         """Add document metadata"""
         session = self.get_session()
         try:
             document = Document(
                 user_id=user_id,
-                doc_id=doc_id,
                 filename=filename,
                 file_size=file_size,
                 file_type=file_type,
-                storage_url=storage_url
+                file_path=file_path,
+                processed=False,
+                chunk_count=0
             )
             session.add(document)
             session.commit()
             session.refresh(document)
             session.expunge(document)
-            logger.info(f"Added document: {doc_id}")
+            logger.info(f"Added document: {filename}")
             return document
         except Exception as e:
             session.rollback()
@@ -629,16 +630,16 @@ class DatabaseManager:
         finally:
             session.close()
     
-    def update_document_status(self, doc_id: str, status: str, num_chunks: int = 0, error_message: str = None):
+    def update_document_status(self, document_id: str, processed: bool = False, chunk_count: int = 0, metadata: str = None):
         """Update document processing status"""
         session = self.get_session()
         try:
-            document = session.query(Document).filter(Document.doc_id == doc_id).first()
+            document = session.query(Document).filter(Document.id == document_id).first()
             if document:
-                document.status = status
-                document.num_chunks = num_chunks
-                if error_message:
-                    document.error_message = error_message
+                document.processed = processed
+                document.chunk_count = chunk_count
+                if metadata:
+                    document.metadata = metadata
                 session.commit()
                 return True
             return False
@@ -661,15 +662,15 @@ class DatabaseManager:
         finally:
             session.close()
     
-    def delete_document(self, doc_id: str):
+    def delete_document(self, document_id: str):
         """Delete document metadata"""
         session = self.get_session()
         try:
-            document = session.query(Document).filter(Document.doc_id == doc_id).first()
+            document = session.query(Document).filter(Document.id == document_id).first()
             if document:
                 session.delete(document)
                 session.commit()
-                logger.info(f"Deleted document: {doc_id}")
+                logger.info(f"Deleted document: {document.filename}")
                 return True
             return False
         finally:
