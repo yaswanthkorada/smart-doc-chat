@@ -157,14 +157,16 @@ class RAGEngine:
             try:
                 self.llm = ChatOpenAI(
                     model=config.OPENAI_MODEL,
-                    api_key=config.OPENAI_API_KEY
+                    api_key=config.OPENAI_API_KEY,
+                    model_kwargs={}
                 )
                 logger.info(f"Using OpenAI model: {config.OPENAI_MODEL}")
             except TypeError:
                 # Fallback for older versions
                 self.llm = ChatOpenAI(
                     model_name=config.OPENAI_MODEL,
-                    openai_api_key=config.OPENAI_API_KEY
+                    openai_api_key=config.OPENAI_API_KEY,
+                    model_kwargs={}
                 )
                 logger.info(f"Using OpenAI model (legacy): {config.OPENAI_MODEL}")
             
@@ -215,7 +217,8 @@ class RAGEngine:
                     )
                     self.llm = ChatOpenAI(
                         model=config.OPENAI_MODEL,
-                        api_key=config.OPENAI_API_KEY
+                        api_key=config.OPENAI_API_KEY,
+                        model_kwargs={}
                     )
                 except TypeError:
                     # Fallback for older langchain-openai versions
@@ -224,7 +227,8 @@ class RAGEngine:
                     )
                     self.llm = ChatOpenAI(
                         model_name=config.OPENAI_MODEL,
-                        openai_api_key=config.OPENAI_API_KEY
+                        openai_api_key=config.OPENAI_API_KEY,
+                        model_kwargs={}
                     )
                 self.model = None
                 logger.info(f"✅ Switched to OpenAI: LLM={config.OPENAI_MODEL}, Embeddings={config.OPENAI_EMBEDDING_MODEL}")
