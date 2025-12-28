@@ -3,7 +3,7 @@ from datetime import datetime
 from utils.database import db_manager
 from components.auth import logout
 from loguru import logger
-from config import settings as config
+from config import config
 
 def render_sidebar():
     """Render sidebar with conversation history and controls"""
