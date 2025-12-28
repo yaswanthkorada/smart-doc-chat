@@ -517,20 +517,19 @@ section[data-testid="stSidebar"] {
 }
 
 /* Sidebar toggle button - always visible and accessible */
+/* This styles Streamlit's native arrow collapse button (<<) */
 button[kind="header"],
 button[data-testid="collapsedControl"],
 button[aria-label*="sidebar"],
 button[aria-label*="Sidebar"],
-[data-testid="baseButton-header"] {
-    background-color: var(--bg-white) !important;
-    color: var(--text-dark) !important;
-    border: 2px solid var(--primary-blue) !important;
+[data-testid="baseButton-header"],
+[data-testid="stSidebar"] button[kind="header"] {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    color: var(--primary-blue) !important;
+    border: 2px solid rgba(255, 255, 255, 0.9) !important;
     border-radius: 8px !important;
-    padding: 10px 12px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-    position: fixed !important;
-    top: 12px !important;
-    left: 12px !important;
+    padding: 8px 10px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
     z-index: 999999 !important;
     display: flex !important;
     align-items: center !important;
@@ -542,37 +541,47 @@ button[aria-label*="Sidebar"],
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: all !important;
+    position: relative !important;
 }
 
 button[kind="header"]:hover,
 button[data-testid="collapsedControl"]:hover,
 button[aria-label*="sidebar"]:hover,
 button[aria-label*="Sidebar"]:hover,
-[data-testid="baseButton-header"]:hover {
+[data-testid="baseButton-header"]:hover,
+[data-testid="stSidebar"] button[kind="header"]:hover {
     background-color: var(--primary-blue) !important;
     color: white !important;
     border-color: var(--primary-hover) !important;
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4) !important;
-    transform: scale(1.05) !important;
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5) !important;
+    transform: scale(1.08) !important;
 }
 
 /* Ensure toggle button icon is visible */
 button[kind="header"] svg,
 button[data-testid="collapsedControl"] svg,
-[data-testid="baseButton-header"] svg {
-    width: 20px !important;
-    height: 20px !important;
+[data-testid="baseButton-header"] svg,
+[data-testid="stSidebar"] button[kind="header"] svg {
+    width: 22px !important;
+    height: 22px !important;
     fill: currentColor !important;
 }
 
-/* Force visibility when sidebar is collapsed */
+/* When sidebar is collapsed, make the expand button fixed and prominent */
 [data-testid="collapsedControl"],
 button[aria-label*="Open sidebar"],
 button[aria-label*="open sidebar"] {
+    position: fixed !important;
+    top: 16px !important;
+    left: 16px !important;
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: all !important;
     display: flex !important;
+    background-color: white !important;
+    border: 2px solid var(--primary-blue) !important;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4) !important;
+    z-index: 999999 !important;
 }
 
 /* === PIN/CONTEXT MENU DROPDOWN === */
