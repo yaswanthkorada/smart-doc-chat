@@ -1,7 +1,9 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text, ForeignKey, Boolean
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from datetime import datetime
+from typing import Union
 import bcrypt
 import uuid
 import urllib.parse
@@ -15,11 +17,10 @@ class User(Base):
     """User model for authentication and management"""
     __tablename__ = 'users'
     
-    id = Column(Integer, primary_key=True)
-    user_uuid = Column(String(36), unique=True, nullable=False, default=lambda: str(uuid.uuid4()))
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     email = Column(String(255), unique=True, nullable=False, index=True)
     username = Column(String(100), unique=True, nullable=False, index=True)
-    password_hash = Column(String(255), nullable=False)
+    password_hash = Column(Text, nullable=False)
     full_name = Column(String(200))
     created_at = Column(DateTime, default=datetime.utcnow)
     last_login = Column(DateTime)
@@ -45,8 +46,7 @@ class User(Base):
     def to_dict(self):
         """Convert to dictionary"""
         return {
-            "id": self.id,
-            "user_uuid": self.user_uuid,
+            "id": str(self.id),
             "email": self.email,
             "username": self.username,
             "full_name": self.full_name,
@@ -59,9 +59,9 @@ class Conversation(Base):
     """Conversation = A complete chat thread"""
     __tablename__ = 'conversations'
     
-    id = Column(Integer, primary_key=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     conversation_id = Column(String(36), unique=True, nullable=False, default=lambda: str(uuid.uuid4()), index=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
     title = Column(String(200), default="New Conversation")
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -77,7 +77,7 @@ class Conversation(Base):
     def to_dict(self):
         """Convert to dictionary"""
         return {
-            "id": self.id,
+            "id": str(self.id),
             "conversation_id": self.conversation_id,
             "title": self.title,
             "created_at": self.created_at.isoformat() if self.created_at else None,
@@ -90,7 +90,7 @@ class ChatSession(Base):
     """Session = A sub-section within a conversation"""
     __tablename__ = 'chat_sessions'
     
-    id = Column(Integer, primary_key=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     session_id = Column(String(36), unique=True, nullable=False, default=lambda: str(uuid.uuid4()), index=True)
     conversation_id = Column(String(36), ForeignKey('conversations.conversation_id'), nullable=False)
     session_start = Column(DateTime, default=datetime.utcnow)
@@ -106,7 +106,7 @@ class ChatSession(Base):
     def to_dict(self):
         """Convert to dictionary"""
         return {
-            "id": self.id,
+            "id": str(self.id),
             "session_id": self.session_id,
             "session_start": self.session_start.isoformat() if self.session_start else None,
             "session_end": self.session_end.isoformat() if self.session_end else None,
@@ -117,7 +117,7 @@ class Message(Base):
     """Individual message in a conversation/session"""
     __tablename__ = 'messages'
     
-    id = Column(Integer, primary_key=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     message_id = Column(String(36), unique=True, nullable=False, default=lambda: str(uuid.uuid4()), index=True)
     conversation_id = Column(String(36), ForeignKey('conversations.conversation_id'), nullable=False)
     session_id = Column(String(36), ForeignKey('chat_sessions.session_id'), nullable=False)
@@ -136,7 +136,7 @@ class Message(Base):
     def to_dict(self):
         """Convert to dictionary"""
         return {
-            "id": self.id,
+            "id": str(self.id),
             "message_id": self.message_id,
             "role": self.role,
             "content": self.content,
@@ -149,9 +149,9 @@ class Document(Base):
     """Document storage metadata"""
     __tablename__ = 'documents'
     
-    id = Column(Integer, primary_key=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     doc_id = Column(String(100), unique=True, nullable=False, index=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
     filename = Column(String(500), nullable=False)
     file_size = Column(Integer)
     file_type = Column(String(50))
@@ -167,7 +167,7 @@ class Document(Base):
     def to_dict(self):
         """Convert to dictionary"""
         return {
-            "id": self.id,
+            "id": str(self.id),
             "doc_id": self.doc_id,
             "filename": self.filename,
             "file_size": self.file_size,
@@ -181,8 +181,8 @@ class QueryAnalytics(Base):
     """Track query analytics for usage dashboard"""
     __tablename__ = 'query_analytics'
     
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
     conversation_id = Column(String(36), ForeignKey('conversations.conversation_id'))
     query_text = Column(Text, nullable=False)
     response_time = Column(Integer)  # milliseconds
@@ -196,8 +196,8 @@ class QueryAnalytics(Base):
     def to_dict(self):
         """Convert to dictionary"""
         return {
-            "id": self.id,
-            "user_id": self.user_id,
+            "id": str(self.id),
+            "user_id": str(self.user_id),
             "query_text": self.query_text,
             "response_time": self.response_time,
             "tokens_used": self.tokens_used,
@@ -330,7 +330,7 @@ class DatabaseManager:
         finally:
             session.close()
     
-    def update_last_login(self, user_id: int):
+    def update_last_login(self, user_id: Union[str, uuid.UUID]):
         """Update user's last login time"""
         session = self.get_session()
         try:
@@ -346,7 +346,7 @@ class DatabaseManager:
     
     # ==================== CONVERSATION OPERATIONS ====================
     
-    def create_conversation(self, user_id: int, title: str = "New Conversation"):
+    def create_conversation(self, user_id: Union[str, uuid.UUID], title: str = "New Conversation"):
         """Create a new conversation"""
         session = self.get_session()
         try:
@@ -364,7 +364,7 @@ class DatabaseManager:
         finally:
             session.close()
     
-    def get_user_conversations(self, user_id: int, limit: int = 50):
+    def get_user_conversations(self, user_id: Union[str, uuid.UUID], limit: int = 50):
         """Get all conversations for a user"""
         session = self.get_session()
         try:
@@ -603,7 +603,7 @@ class DatabaseManager:
     
     # ==================== DOCUMENT OPERATIONS ====================
     
-    def add_document(self, user_id: int, doc_id: str, filename: str, 
+    def add_document(self, user_id: Union[str, uuid.UUID], doc_id: str, filename: str, 
                     file_size: int, file_type: str, storage_url: str):
         """Add document metadata"""
         session = self.get_session()
@@ -645,7 +645,7 @@ class DatabaseManager:
         finally:
             session.close()
     
-    def get_user_documents(self, user_id: int):
+    def get_user_documents(self, user_id: Union[str, uuid.UUID]):
         """Get all documents for a user"""
         session = self.get_session()
         try:
@@ -677,7 +677,7 @@ class DatabaseManager:
     
     # ==================== ANALYTICS ====================
     
-    def log_query_analytics(self, user_id: int, conversation_id: str, query_text: str, 
+    def log_query_analytics(self, user_id: Union[str, uuid.UUID], conversation_id: str, query_text: str, 
                            response_time: int, tokens_used: int, documents_searched: list,
                            ai_provider: str, success: bool = True, error_message: str = None):
         """Log query analytics for dashboard"""

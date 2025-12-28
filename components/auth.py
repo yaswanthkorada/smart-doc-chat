@@ -300,10 +300,11 @@ def require_auth(func):
         return func(*args, **kwargs)
     return wrapper
 
-def check_tier_limit(user_id: int, limit_type: str) -> tuple:
+def check_tier_limit(user_id: str, limit_type: str) -> tuple:
     """
     Check if user has reached tier limit - uses Supabase
     Returns: (can_proceed, current_count, limit)
+    user_id: UUID string
     """
     tier = st.session_state.get('subscription_tier', 'free')
     limits = config.get_tier_limits(tier)
