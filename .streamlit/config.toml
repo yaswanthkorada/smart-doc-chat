@@ -1,0 +1,13 @@
+[theme]
+# Enterprise Light Theme - WCAG 2.1 AA Compliant
+primaryColor = "#3B82F6"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F8FAFC"
+textColor = "#111827"
+font = "sans serif"
+base = "light"
+
+[server]
+headless = true
+enableCORS = false
+enableXsrfProtection = true

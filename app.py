@@ -14,14 +14,20 @@ logger.add(config.LOG_FILE, rotation="500 MB", retention="10 days", level=config
 
 # Page config
 st.set_page_config(
-    page_title=config.APP_NAME,
+    page_title="RAG Assistant – Sign In",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
+# Load global CSS
+try:
+    with open("styles.css") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+except FileNotFoundError:
+    pass
 
-# Custom CSS
+# Custom CSS (legacy - can be removed once styles.css is confirmed working)
 st.markdown("""
     <style>
     /* Main page background - white */
@@ -439,11 +445,27 @@ def main():
     # Render sidebar
     render_sidebar()
     
+    # Logo and header
+    col_logo, col_title = st.columns([1, 11])
+    with col_logo:
+        st.markdown("# 🤖")
+    with col_title:
+        st.title(config.APP_NAME)
+        st.markdown("Chat with your documents using AI")
+    
+    # Developer credit
+    st.markdown("""
+    <div style="position: fixed; bottom: 16px; right: 16px; background: white; border: 1px solid #E5E7EB; 
+                border-radius: 8px; padding: 12px 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); 
+                font-size: 12px; color: #6B7280; z-index: 1000;">
+        Developed by <a href="mailto:yaswanthkorada321@gmail.com" style="color: #3B82F6; text-decoration: none; font-weight: 500;">Yaswanth Korada</a>
+    </div>
+    """, unsafe_allow_html=True)
+    
     # Main content area
     col1, col2, col3 = st.columns([5, 2, 1])
     with col1:
-        st.title(f"🤖 {config.APP_NAME}")
-        st.markdown("Chat with your documents using AI")
+        pass  # Content moved to header above
     with col2:
         # AI Provider selector
         ai_provider = st.selectbox(

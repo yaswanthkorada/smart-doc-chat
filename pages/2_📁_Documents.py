@@ -16,7 +16,14 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS for consistent styling
+# Load global CSS
+try:
+    with open("styles.css") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+except FileNotFoundError:
+    pass
+
+# Custom CSS for consistent styling (legacy)
 st.markdown("""
     <style>
     /* Main page background - white */
@@ -150,8 +157,13 @@ st.markdown("""
 def documents_page():
     render_sidebar()
     
-    st.title("📁 Document Management")
-    st.markdown("Upload and manage your documents for AI-powered chat")
+    # Logo and header
+    col_logo, col_title = st.columns([1, 11])
+    with col_logo:
+        st.markdown("# 📁")
+    with col_title:
+        st.title("Document Management")
+        st.markdown("Upload and manage your documents for AI-powered chat")
     
     user_id = st.session_state.get('user_id')
     

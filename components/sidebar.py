@@ -22,10 +22,10 @@ def render_sidebar():
         # Action buttons
         col1, col2 = st.columns([3, 1])
         with col1:
-            if st.button("➕ New Chat", use_container_width=True):
+            if st.button("➕ New Chat", use_container_width=True, help="Start a new conversation"):
                 create_new_conversation()
         with col2:
-            if st.button("🚪", use_container_width=True, help="Logout"):
+            if st.button("🔓", use_container_width=True, help="Logout", key="logout_button"):
                 logout()
         
         st.divider()

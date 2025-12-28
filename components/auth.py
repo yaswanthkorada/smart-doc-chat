@@ -1,6 +1,7 @@
 import streamlit as st
 import re
 import hashlib
+import time
 from utils.supabase_client import supabase
 from config import config
 from loguru import logger
@@ -38,11 +39,11 @@ def validate_password(password: str) -> tuple:
 
 def login_page():
     """Login interface with Supabase"""
-    st.title("🔐 Login to RAG Assistant")
+    st.title("🔐 Sign In")
     
     with st.form("login_form"):
-        username = st.text_input("Username", key="login_username")
-        password = st.text_input("Password", type="password", key="login_password")
+        username = st.text_input("Username", key="login_username", placeholder="Enter your username")
+        password = st.text_input("Password", type="password", key="login_password", placeholder="Enter your password")
         
         col1, col2 = st.columns(2)
         with col1:
@@ -195,10 +196,10 @@ def signup_page():
                     logger.info(f"New user created: {username}")
                     st.success("✅ Account created successfully! Please login.")
                     st.balloons()
-                    return True
+                    time.sleep(2)
+                    st.rerun()
                 else:
                     st.error("Error creating account. Please try again.")
-                    return False
                 
             except Exception as e:
                 logger.error(f"Signup error: {e}")
@@ -263,10 +264,8 @@ def auth_page():
 
     with tab1:
         # Black text for login title
-        st.markdown("<h2 style='color: #111;'>Login</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='color: #111;'>Sign In to RAG Assistant</h2>", unsafe_allow_html=True)
         login_page()
-        st.write("")
-        st.markdown("<span style='color: #333;'><b>Demo Account:</b> username: <code>demo</code>, password: <code>Demo@123</code></span>", unsafe_allow_html=True)
 
     with tab2:
         # Black text for signup title
@@ -276,7 +275,7 @@ def auth_page():
     # Footer
     st.write("")
     st.write("")
-    st.markdown("<p style='text-align: center; color: #222; font-size: 0.8rem;'>© 2024 RAG Assistant. All rights reserved.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #222; font-size: 0.8rem;'>Developed by <a href='mailto:yaswanthkorada321@gmail.com' style='color: #3B82F6;'>Yaswanth Korada</a></p>", unsafe_allow_html=True)
 
 def logout():
     """Logout function"""
@@ -330,26 +329,4 @@ def check_tier_limit(user_id: str, limit_type: str) -> tuple:
     can_proceed = current_count < limit
     return can_proceed, current_count, limit
 
-# Create demo user on first run
-def create_demo_user():
-    """Create demo user if doesn't exist - uses Supabase"""
-    try:
-        # Check if demo user exists in Supabase
-        result = supabase.table('users').select('*').eq('username', 'demo').execute()
-        
-        if not result.data or len(result.data) == 0:
-            # Create demo user
-            password_hash = hash_password("Demo@123")
-            supabase.table('users').insert({
-                'email': 'demo@ragassistant.com',
-                'username': 'demo',
-                'password_hash': password_hash,
-                'full_name': 'Demo User',
-                'subscription_tier': 'free'
-            }).execute()
-            logger.info("Demo user created in Supabase")
-    except Exception as e:
-        logger.error(f"Error creating demo user: {e}")
-
-# Create demo user on module import
-create_demo_user()
+# Removed demo user creation for production deployment

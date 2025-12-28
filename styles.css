@@ -1,0 +1,561 @@
+/* ============================================
+   RAG Assistant - Enterprise Light Theme
+   WCAG 2.1 AA Compliant Styles
+   ============================================ */
+
+/* === GLOBAL THEME === */
+:root {
+    --primary-blue: #3B82F6;
+    --primary-hover: #2563EB;
+    --text-dark: #111827;
+    --text-gray: #6B7280;
+    --border-gray: #E5E7EB;
+    --bg-white: #FFFFFF;
+    --bg-light: #F8FAFC;
+    --bg-hover: #F1F5F9;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* === REMOVE TOP BLACK HEADER === */
+[data-testid="stHeader"],
+header[data-testid="stHeader"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    background: transparent !important;
+}
+
+/* === MAIN LAYOUT === */
+.main, .stApp {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+}
+
+/* === TEXT INPUTS === */
+[data-testid="stTextInput"] input,
+[data-testid="stPasswordInput"] input,
+.stTextInput input,
+.stPasswordInput input,
+textarea,
+[data-baseweb="input"] input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+}
+
+[data-testid="stTextInput"] input:focus,
+[data-testid="stPasswordInput"] input:focus,
+textarea:focus,
+input:focus {
+    outline: none !important;
+    border-color: var(--primary-blue) !important;
+    box-shadow: var(--focus-ring) !important;
+}
+
+[data-testid="stTextInput"] input::placeholder,
+[data-testid="stPasswordInput"] input::placeholder,
+textarea::placeholder,
+input::placeholder {
+    color: var(--text-gray) !important;
+    opacity: 0.7 !important;
+}
+
+/* Remove incorrect helper text */
+[data-testid="stTextInput"] .st-emotion-cache-16idsys,
+[data-testid="stPasswordInput"] .st-emotion-cache-16idsys {
+    display: none !important;
+}
+
+/* === PASSWORD EYE TOGGLE === */
+[data-testid="stPasswordInput"] button,
+button[kind="icon"],
+button[aria-label*="password"],
+button[aria-label*="Password"] {
+    background-color: transparent !important;
+    color: var(--text-gray) !important;
+    border: none !important;
+    padding: 4px !important;
+}
+
+[data-testid="stPasswordInput"] button:hover {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-dark) !important;
+}
+
+[data-testid="stPasswordInput"] button svg {
+    fill: var(--text-gray) !important;
+}
+
+[data-testid="stPasswordInput"] button:hover svg {
+    fill: var(--text-dark) !important;
+}
+
+/* === LABELS === */
+label,
+.stTextInput label,
+.stPasswordInput label,
+.stSelectbox label,
+.stCheckbox label,
+.stRadio label,
+[data-testid="stWidgetLabel"] {
+    color: var(--text-dark) !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    margin-bottom: 6px !important;
+}
+
+/* === BUTTONS === */
+.stButton button,
+button[kind="primary"],
+button[kind="secondary"],
+button[kind="tertiary"],
+button {
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid var(--border-gray) !important;
+}
+
+/* Primary Button */
+button[kind="primary"],
+.stButton button[kind="primary"],
+button[data-testid="baseButton-primary"] {
+    background-color: var(--primary-blue) !important;
+    color: white !important;
+    border: none !important;
+}
+
+button[kind="primary"]:hover,
+.stButton button[kind="primary"]:hover {
+    background-color: var(--primary-hover) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+button[kind="primary"]:focus {
+    box-shadow: var(--focus-ring) !important;
+}
+
+/* Secondary/Link Buttons (e.g., Forgot Password) */
+button[kind="secondary"],
+button[kind="tertiary"],
+.stButton button[kind="secondary"],
+.stButton button[kind="tertiary"] {
+    background-color: transparent !important;
+    color: var(--primary-blue) !important;
+    border: 1px solid var(--border-gray) !important;
+}
+
+button[kind="secondary"]:hover,
+button[kind="tertiary"]:hover {
+    background-color: var(--bg-hover) !important;
+    border-color: var(--primary-blue) !important;
+}
+
+/* Generic buttons */
+.stButton button:not([kind]) {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+}
+
+.stButton button:not([kind]):hover {
+    background-color: var(--bg-hover) !important;
+}
+
+/* === CHECKBOXES === */
+[data-testid="stCheckbox"],
+.stCheckbox {
+    color: var(--text-dark) !important;
+}
+
+[data-testid="stCheckbox"] input[type="checkbox"],
+.stCheckbox input[type="checkbox"] {
+    accent-color: var(--primary-blue) !important;
+    width: 18px !important;
+    height: 18px !important;
+    cursor: pointer !important;
+}
+
+[data-testid="stCheckbox"] label,
+.stCheckbox label {
+    color: var(--text-dark) !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+}
+
+/* === SELECTBOX / DROPDOWNS === */
+[data-testid="stSelectbox"],
+.stSelectbox,
+[data-baseweb="select"] {
+    background-color: var(--bg-white) !important;
+}
+
+[data-baseweb="select"] > div {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 6px !important;
+}
+
+[data-baseweb="select"]:hover > div {
+    border-color: var(--primary-blue) !important;
+}
+
+/* Dropdown menu popover */
+[data-baseweb="popover"],
+[data-baseweb="menu"],
+[role="listbox"] {
+    background-color: var(--bg-white) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 6px !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+/* Dropdown menu items */
+[role="option"],
+[data-baseweb="menu"] li {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+    padding: 8px 12px !important;
+}
+
+[role="option"]:hover,
+[data-baseweb="menu"] li:hover {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-dark) !important;
+}
+
+[role="option"][aria-selected="true"] {
+    background-color: #EFF6FF !important;
+    color: var(--primary-blue) !important;
+}
+
+/* Fix AI Provider white-on-white issue */
+[data-testid="stSelectbox"] [data-baseweb="select"] span {
+    color: var(--text-dark) !important;
+}
+
+/* === SEARCH BAR === */
+[data-testid="stTextInput"][aria-label*="Search"],
+[data-testid="stTextInput"][aria-label*="search"],
+.search-input {
+    background-color: var(--bg-white) !important;
+}
+
+[data-testid="stTextInput"][aria-label*="Search"] input,
+[data-testid="stTextInput"][aria-label*="search"] input {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-gray) !important;
+    padding-left: 36px !important;
+}
+
+/* === VOICE INPUT BOX === */
+[data-testid="stAudioInput"],
+.stAudioInput,
+audio {
+    background-color: var(--bg-white) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+}
+
+[data-testid="stAudioInput"] button {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-gray) !important;
+}
+
+[data-testid="stAudioInput"] button:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+/* === TOOLTIPS === */
+[data-baseweb="tooltip"],
+.stTooltipIcon,
+[role="tooltip"] {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 6px !important;
+    box-shadow: var(--shadow-md) !important;
+    padding: 8px 12px !important;
+}
+
+/* === SOURCE VIEW / HOVER PANELS === */
+[data-testid="stExpander"],
+.streamlit-expanderHeader,
+.streamlit-expanderContent {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 6px !important;
+}
+
+.streamlit-expanderHeader {
+    background-color: var(--bg-light) !important;
+    padding: 12px !important;
+}
+
+.streamlit-expanderHeader:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+.streamlit-expanderContent {
+    padding: 12px !important;
+}
+
+/* === FILE UPLOADER === */
+[data-testid="stFileUploader"],
+.stFileUploader {
+    background-color: var(--bg-white) !important;
+    border-radius: 6px !important;
+}
+
+[data-testid="stFileUploader"] section {
+    background-color: var(--bg-light) !important;
+    border: 2px dashed var(--border-gray) !important;
+    border-radius: 6px !important;
+    color: var(--text-dark) !important;
+    padding: 20px !important;
+}
+
+[data-testid="stFileUploader"] section:hover {
+    border-color: var(--primary-blue) !important;
+    background-color: #EFF6FF !important;
+}
+
+[data-testid="stFileUploader"] * {
+    color: var(--text-dark) !important;
+}
+
+/* === TABS === */
+.stTabs [data-baseweb="tab-list"] {
+    background-color: var(--bg-light) !important;
+    border-radius: 6px 6px 0 0 !important;
+    gap: 0 !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+    color: var(--text-gray) !important;
+    background-color: transparent !important;
+    padding: 12px 24px !important;
+    font-weight: 500 !important;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    color: var(--text-dark) !important;
+    background-color: var(--bg-hover) !important;
+}
+
+.stTabs [data-baseweb="tab"][aria-selected="true"] {
+    color: var(--primary-blue) !important;
+    background-color: var(--bg-white) !important;
+    border-bottom: 2px solid var(--primary-blue) !important;
+}
+
+/* === CHAT INTERFACE === */
+.stChatMessage {
+    background-color: var(--bg-light) !important;
+    color: var(--text-dark) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    margin: 8px 0 !important;
+    border: 1px solid var(--border-gray) !important;
+}
+
+[data-testid="stChatInput"] {
+    background-color: var(--bg-white) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 8px !important;
+}
+
+[data-testid="stChatInput"] textarea {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+}
+
+/* === SIDEBAR === */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+[data-testid="stSidebar"] * {
+    color: white !important;
+}
+
+[data-testid="stSidebar"] .stButton button {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+[data-testid="stSidebar"] .stButton button:hover {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+}
+
+[data-testid="stSidebar"] input {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+}
+
+[data-testid="stSidebar"] input::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* === PIN/CONTEXT MENU DROPDOWN === */
+[data-baseweb="popover"] [role="menu"],
+[data-testid="baseButton-headerNoPadding"] + div {
+    background-color: var(--bg-white) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 6px !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+[data-baseweb="popover"] [role="menu"] button,
+[data-baseweb="popover"] [role="menuitem"] {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+    padding: 8px 16px !important;
+    border: none !important;
+}
+
+[data-baseweb="popover"] [role="menu"] button:hover,
+[data-baseweb="popover"] [role="menuitem"]:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+/* === HEADINGS === */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-dark) !important;
+    font-weight: 600 !important;
+}
+
+/* === CODE BLOCKS === */
+code, pre {
+    background-color: #F3F4F6 !important;
+    color: #1F2937 !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 4px !important;
+    padding: 2px 6px !important;
+    font-family: 'Courier New', monospace !important;
+}
+
+/* === ALERTS === */
+.stAlert {
+    border-radius: 6px !important;
+    border: 1px solid var(--border-gray) !important;
+}
+
+/* === NUMBER INPUT === */
+[data-testid="stNumberInput"] input,
+.stNumberInput input {
+    background-color: var(--bg-white) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-gray) !important;
+}
+
+/* === FORMS === */
+[data-testid="stForm"] {
+    background-color: var(--bg-white) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 8px !important;
+    padding: 24px !important;
+}
+
+/* === NEW CHAT BUTTON === */
+button[aria-label*="New Chat"],
+button[aria-label*="new chat"],
+.stButton button:has-text("New Chat") {
+    background-color: var(--primary-blue) !important;
+    color: white !important;
+    border: none !important;
+    font-weight: 600 !important;
+}
+
+button[aria-label*="New Chat"]:hover {
+    background-color: var(--primary-hover) !important;
+}
+
+/* === LOGOUT ICON === */
+button[aria-label*="Logout"],
+button[aria-label*="logout"],
+button[aria-label*="Log out"] {
+    background-color: transparent !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+button[aria-label*="Logout"]:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* === ACCESSIBILITY === */
+*:focus-visible {
+    outline: 2px solid var(--primary-blue) !important;
+    outline-offset: 2px !important;
+}
+
+/* === LOADING SPINNER === */
+[data-testid="stSpinner"] {
+    color: var(--primary-blue) !important;
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-gray);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-gray);
+}
+
+/* === DEVELOPER CREDIT === */
+.developer-credit {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background-color: var(--bg-white);
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: var(--shadow-md);
+    font-size: 12px;
+    color: var(--text-gray);
+    z-index: 1000;
+}
+
+.developer-credit a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.developer-credit a:hover {
+    text-decoration: underline;
+}
