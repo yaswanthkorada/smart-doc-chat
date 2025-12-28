@@ -73,37 +73,88 @@ st.markdown("""
 
 <script>
 function toggleSidebar() {
-    // Method 1: Try to click Streamlit's native toggle
-    const streamlitToggle = document.querySelector('button[kind="header"]') || 
-                           document.querySelector('button[data-testid="collapsedControl"]') ||
-                           document.querySelector('[data-testid="baseButton-header"]');
-    
-    if (streamlitToggle) {
-        streamlitToggle.click();
-        return;
-    }
-    
-    // Method 2: Toggle sidebar visibility directly
-    const sidebar = document.querySelector('[data-testid="stSidebar"]');
-    if (sidebar) {
-        const isCollapsed = sidebar.getAttribute('aria-expanded') === 'false' || 
-                          window.getComputedStyle(sidebar).marginLeft.startsWith('-');
+    // Wait for DOM to be ready
+    setTimeout(function() {
+        // Method 1: Find and click Streamlit's native toggle buttons
+        const toggleSelectors = [
+            'button[kind="header"]',
+            'button[data-testid="collapsedControl"]',
+            '[data-testid="baseButton-header"]',
+            'button[aria-label*="sidebar"]',
+            'button[aria-label*="Sidebar"]',
+            'section[data-testid="stSidebar"] button[kind="header"]'
+        ];
         
-        if (isCollapsed) {
-            sidebar.style.marginLeft = '0';
-            sidebar.setAttribute('aria-expanded', 'true');
-        } else {
-            sidebar.style.marginLeft = '-21rem';
-            sidebar.setAttribute('aria-expanded', 'false');
+        for (let selector of toggleSelectors) {
+            const btn = document.querySelector(selector);
+            if (btn && btn.offsetParent !== null) {
+                btn.click();
+                console.log('Clicked toggle button:', selector);
+                return;
+            }
         }
-    }
+        
+        // Method 2: Direct manipulation of sidebar
+        const sidebar = document.querySelector('[data-testid="stSidebar"]');
+        const sidebarContent = document.querySelector('section[data-testid="stSidebar"]');
+        
+        if (sidebar || sidebarContent) {
+            const element = sidebar || sidebarContent;
+            const computedStyle = window.getComputedStyle(element);
+            const currentMargin = computedStyle.marginLeft;
+            const isHidden = currentMargin.includes('-') || parseInt(currentMargin) < -100;
+            
+            console.log('Current margin:', currentMargin, 'Hidden:', isHidden);
+            
+            if (isHidden) {
+                // Show sidebar
+                element.style.marginLeft = '0px';
+                element.style.transform = 'translateX(0)';
+                element.style.display = 'block';
+                element.style.visibility = 'visible';
+                element.setAttribute('aria-expanded', 'true');
+            } else {
+                // Hide sidebar
+                element.style.marginLeft = '-21rem';
+                element.style.transform = 'translateX(-100%)';
+                element.setAttribute('aria-expanded', 'false');
+            }
+        }
+        
+        // Method 3: Try to find collapse/expand controls inside sidebar
+        const collapseBtn = document.querySelector('[data-testid="stSidebar"] button[kind="header"]');
+        if (collapseBtn) {
+            collapseBtn.click();
+            console.log('Clicked sidebar internal button');
+        }
+    }, 100);
 }
 
-// Also make sure the floating button is always on top
-document.addEventListener('DOMContentLoaded', function() {
+// Keep button on top and add click listener
+window.addEventListener('load', function() {
     const toggle = document.querySelector('.floating-sidebar-toggle');
     if (toggle) {
+        // Ensure it's appended to body
         document.body.appendChild(toggle);
+        console.log('Floating toggle button initialized');
+    }
+    
+    // Also monitor for sidebar state changes
+    const observer = new MutationObserver(function(mutations) {
+        const sidebar = document.querySelector('[data-testid="stSidebar"]');
+        if (sidebar) {
+            console.log('Sidebar found, current margin:', window.getComputedStyle(sidebar).marginLeft);
+        }
+    });
+    
+    observer.observe(document.body, { childList: true, subtree: true });
+});
+
+// Backup: Monitor clicks on floating button
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.classList.contains('floating-sidebar-toggle')) {
+        console.log('Floating toggle clicked!');
+        toggleSidebar();
     }
 });
 </script>
