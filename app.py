@@ -445,15 +445,29 @@ def main():
         st.title(f"🤖 {config.APP_NAME}")
         st.markdown("Chat with your documents using AI")
     with col2:
-        # AI Provider selector
+        # AI Provider selector with automatic embedding switch
         ai_provider = st.selectbox(
             "🤖 AI Model",
             options=["gemini", "openai"],
-            index=0 if config.AI_PROVIDER == "gemini" else 1,
-            help="Choose AI provider: Gemini (Free 1000 req/day) or OpenAI (Paid)",
+            index=0,  # Default to Gemini (first option)
+            format_func=lambda x: "✨ Gemini AI (Free)" if x == "gemini" else "🤖 OpenAI (Paid)",
+            help="Gemini: Free 1000 req/day with automatic embeddings | OpenAI: Paid with automatic embeddings",
             key="ai_provider_selector"
         )
+        # Dynamically switch both LLM and embeddings when provider changes
+        if 'previous_ai_provider' not in st.session_state:
+            st.session_state.previous_ai_provider = ai_provider
+        
+        if st.session_state.previous_ai_provider != ai_provider:
+            # Provider changed - update RAG engine
+            if rag_engine.update_provider(ai_provider):
+                st.success(f"✅ Switched to {ai_provider.upper()} (LLM + Embeddings)")
+                logger.info(f"Provider switched to: {ai_provider}")
+            st.session_state.previous_ai_provider = ai_provider
+        
+        # Store selected provider
         st.session_state.selected_ai_provider = ai_provider
+        st.session_state.selected_embedding_provider = ai_provider  # Auto-switch embeddings
     with col3:
         if st.session_state.get('current_session_id'):
             st.markdown('<div class="session-badge">🟢 Active</div>', unsafe_allow_html=True)

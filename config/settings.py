@@ -47,9 +47,9 @@ class Config:
     SECRET_KEY = get_config_value("SECRET_KEY", "dev-secret-key")
     DEBUG = get_config_value("DEBUG", "True").lower() == "true"
     
-    # AI Provider
-    AI_PROVIDER = get_config_value("AI_PROVIDER", "openai")
-    EMBEDDING_PROVIDER = get_config_value("EMBEDDING_PROVIDER", "openai")
+    # AI Provider - Default to Gemini (Free tier)
+    AI_PROVIDER = get_config_value("AI_PROVIDER", "gemini")
+    EMBEDDING_PROVIDER = get_config_value("EMBEDDING_PROVIDER", "gemini")
     HUGGINGFACE_MODEL = get_config_value("HUGGINGFACE_MODEL", "sentence-transformers/all-mpnet-base-v2")
     
     # OpenAI - Try both direct and nested secrets
