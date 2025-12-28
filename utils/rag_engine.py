@@ -646,10 +646,11 @@ Be concise but thorough. Focus on information that would be useful for answering
             
             # Update document status to failed
             if doc_id:
+                import json
                 db_manager.update_document_status(
                     document_id=doc_id,
                     processed=False,
-                    metadata=str(e)
+                    metadata=json.dumps({"error": str(e)})
                 )
             
             raise e
@@ -739,10 +740,11 @@ Be concise but thorough. Focus on information that would be useful for answering
             
             # Update document status to failed
             if doc_id:
+                import json
                 db_manager.update_document_status(
                     document_id=doc_id,
                     processed=False,
-                    metadata=str(e)
+                    metadata=json.dumps({"error": str(e)})
                 )
             
             raise e
@@ -849,10 +851,11 @@ Be concise but thorough. Focus on information that would be useful for answering
             
             # Update document status to failed
             if doc_id:
+                import json
                 db_manager.update_document_status(
                     document_id=doc_id,
                     processed=False,
-                    metadata=str(e)
+                    metadata=json.dumps({"error": str(e)})
                 )
             
             raise e
@@ -953,7 +956,7 @@ Be concise but thorough. Focus on information that would be useful for answering
                 logger.info(f"Deleted {len(results['ids'])} chunks from vector store")
             
             # Delete from storage
-            storage.delete_file(document.storage_url)
+            storage.delete_file(document.file_path)
             
             # Delete from database
             db_manager.delete_document(doc_id)
@@ -971,7 +974,7 @@ Be concise but thorough. Focus on information that would be useful for answering
             documents = db_manager.get_user_documents(user_id)
             
             total_size = sum(doc.file_size for doc in documents)
-            total_chunks = sum(doc.num_chunks for doc in documents)
+            total_chunks = sum(doc.chunk_count for doc in documents)
             
             by_status = {}
             for doc in documents:
