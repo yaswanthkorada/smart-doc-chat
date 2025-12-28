@@ -992,10 +992,8 @@ Be concise but thorough. Focus on information that would be useful for answering
             return {}
 
     def _query_with_openai(self, query: str, vectorstore, chat_history: List, top_k: int) -> Dict:
-        """Query using OpenAI API"""
-        from langchain.chains import LLMChain
-        from langchain.prompts import PromptTemplate
-        from langchain.chains.combine_documents.stuff import StuffDocumentsChain
+        """Query using OpenAI API - Direct invocation to avoid temperature issues"""
+        from langchain_core.messages import HumanMessage, SystemMessage
         
         # Get relevant documents
         retriever = vectorstore.as_retriever(
@@ -1005,59 +1003,39 @@ Be concise but thorough. Focus on information that would be useful for answering
         
         # Condense question if there's chat history
         if chat_history:
-            condense_question_prompt = PromptTemplate(
-                template="""Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in its original language.
-
-Chat History:
-{chat_history}
-Follow Up Input: {question}
-Standalone question:""",
-                input_variables=["chat_history", "question"]
-            )
-            
-            question_generator = LLMChain(
-                llm=self.llm,
-                prompt=condense_question_prompt
-            )
-            
             # Format chat history
             chat_history_str = "\n".join([f"Human: {h[0]}\nAssistant: {h[1]}" for h in chat_history])
-            standalone_question = question_generator.run(
-                chat_history=chat_history_str,
-                question=query
-            )
+            
+            condense_prompt = f"""Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in its original language.
+
+Chat History:
+{chat_history_str}
+Follow Up Input: {query}
+Standalone question:"""
+            
+            # Direct LLM invocation
+            response = self.llm.invoke([HumanMessage(content=condense_prompt)])
+            standalone_question = response.content
         else:
             standalone_question = query
         
         # Get relevant documents
         docs = retriever.get_relevant_documents(standalone_question)
         
-        # Create QA prompt
-        qa_prompt = PromptTemplate(
-            template="""Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+        # Format context from documents
+        context = "\n\n".join([doc.page_content for doc in docs])
+        
+        # Create final prompt
+        final_prompt = f"""Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
 
 {context}
 
-Question: {question}
-Helpful Answer:""",
-            input_variables=["context", "question"]
-        )
+Question: {standalone_question}
+Helpful Answer:"""
         
-        # Create document chain
-        doc_prompt = PromptTemplate(
-            template="{page_content}",
-            input_variables=["page_content"]
-        )
-        
-        llm_chain = LLMChain(llm=self.llm, prompt=qa_prompt)
-        stuff_chain = StuffDocumentsChain(
-            llm_chain=llm_chain,
-            document_variable_name="context",
-            document_prompt=doc_prompt
-        )
-        
-        # Run the chain
-        answer = stuff_chain.run(input_documents=docs, question=standalone_question)
+        # Direct LLM invocation for answer
+        response = self.llm.invoke([HumanMessage(content=final_prompt)])
+        answer = response.content
         
         return {
             "answer": answer,
