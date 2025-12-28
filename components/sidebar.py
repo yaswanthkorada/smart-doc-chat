@@ -7,9 +7,8 @@ from config import config
 
 def render_sidebar():
     """Render sidebar with conversation history and controls"""
-    # Only render when sidebar is open (session-controlled)
-    if not st.session_state.get("sidebar_open", True):
-        return
+    # Always render; visibility is controlled by Streamlit + CSS.
+    # This avoids losing access when collapsed and ensures the native toggle works.
 
     with st.sidebar:
         # User info

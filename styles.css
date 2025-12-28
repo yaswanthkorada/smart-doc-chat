@@ -454,7 +454,7 @@ section[data-testid="stSidebar"][aria-expanded="true"] {
     width: 21rem !important;
 }
 
-/* Collapsed sidebar state - completely hidden, no ghost strip */
+/* Collapsed sidebar state - remove ghost width but keep controls visible */
 [data-testid="stSidebar"][aria-expanded="false"],
 section[data-testid="stSidebar"][aria-expanded="false"],
 [data-testid="stSidebarCollapsed"],
@@ -463,12 +463,10 @@ section.st-emotion-cache-stSidebarCollapsed {
     width: 0 !important;
     min-width: 0 !important;
     margin-left: 0 !important;
-    transform: translateX(-100%) !important;
     border: none !important;
     background: transparent !important;
     box-shadow: none !important;
-    overflow: hidden !important;
-    visibility: hidden !important;
+    overflow: hidden !important; /* allow control overlays to remain clickable */
 }
 
 /* Sidebar text colors (light theme) */
