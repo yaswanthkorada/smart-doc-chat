@@ -584,12 +584,14 @@ Be concise but thorough. Focus on information that would be useful for answering
             # Add to database
             document = db_manager.add_document(
                 user_id=user_id,
-                doc_id=doc_id,
                 filename=filename,
                 file_size=0,  # No file size for YouTube
                 file_type="youtube",
-                storage_url=youtube_url
+                file_path=youtube_url
             )
+            
+            # Store doc_id from the created document
+            doc_id = str(document.id)
             
             # Extract transcript
             documents = self.extract_youtube_transcript(youtube_url)
@@ -645,9 +647,9 @@ Be concise but thorough. Focus on information that would be useful for answering
             # Update document status to failed
             if doc_id:
                 db_manager.update_document_status(
-                    doc_id=doc_id,
-                    status="failed",
-                    error_message=str(e)
+                    document_id=doc_id,
+                    processed=False,
+                    metadata=str(e)
                 )
             
             raise e
@@ -675,12 +677,14 @@ Be concise but thorough. Focus on information that would be useful for answering
             # Add to database
             document = db_manager.add_document(
                 user_id=user_id,
-                doc_id=doc_id,
                 filename=filename,
                 file_size=0,  # No file size for websites
                 file_type="website",
-                storage_url=url
+                file_path=url
             )
+            
+            # Store doc_id from the created document
+            doc_id = str(document.id)
             
             # Extract website content
             documents = self.extract_website_content(url)
@@ -784,12 +788,14 @@ Be concise but thorough. Focus on information that would be useful for answering
             # Add to database with processing status
             document = db_manager.add_document(
                 user_id=user_id,
-                doc_id=doc_id,
                 filename=filename,
                 file_size=file_size,
                 file_type=file_type,
-                storage_url=storage_url
+                file_path=storage_url
             )
+            
+            # Store doc_id from the created document
+            doc_id = str(document.id)
             
             # Extract text
             documents = self.extract_text_from_file(file_path, file_type)
