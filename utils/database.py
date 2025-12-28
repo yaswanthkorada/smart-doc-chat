@@ -158,7 +158,7 @@ class Document(Base):
     upload_date = Column(DateTime, default=datetime.utcnow)
     processed = Column(Boolean, default=False)
     chunk_count = Column(Integer, default=0)
-    metadata = Column(Text)  # JSONB stored as text for SQLAlchemy compatibility
+    doc_metadata = Column('metadata', Text)  # Map to 'metadata' column in DB, avoiding reserved word
     
     # Relationships
     user = relationship("User", back_populates="documents")
@@ -174,7 +174,7 @@ class Document(Base):
             "chunk_count": self.chunk_count,
             "upload_date": self.upload_date.isoformat() if self.upload_date else None,
             "processed": self.processed,
-            "metadata": self.metadata
+            "metadata": self.doc_metadata
         }
 
 class QueryAnalytics(Base):
@@ -639,7 +639,7 @@ class DatabaseManager:
                 document.processed = processed
                 document.chunk_count = chunk_count
                 if metadata:
-                    document.metadata = metadata
+                    document.doc_metadata = metadata
                 session.commit()
                 return True
             return False
