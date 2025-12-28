@@ -442,15 +442,6 @@ st.markdown("""
 def main():
     """Main application"""
     
-    # Navigation menu (accessible even when sidebar is collapsed)
-    st.markdown("""
-    <div class="nav-menu">
-        <a href="/" class="active" title="Chat">🤖 Chat</a>
-        <a href="/Documents" title="Documents">📁 Documents</a>
-        <a href="/Settings" title="Settings">⚙️ Settings</a>
-    </div>
-    """, unsafe_allow_html=True)
-    
     # Render sidebar
     render_sidebar()
     

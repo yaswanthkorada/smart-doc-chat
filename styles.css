@@ -548,48 +548,6 @@ button[aria-label*="Logout"]:hover {
     background: var(--text-gray);
 }
 
-/* === NAVIGATION MENU (for collapsed sidebar) === */
-.nav-menu {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    background-color: var(--bg-white);
-    border: 1px solid var(--border-gray);
-    border-radius: 8px;
-    padding: 8px;
-    box-shadow: var(--shadow-md);
-    z-index: 1001;
-    display: flex;
-    gap: 8px;
-}
-
-.nav-menu a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 12px;
-    background-color: var(--bg-white);
-    color: var(--text-dark);
-    text-decoration: none;
-    border: 1px solid var(--border-gray);
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.nav-menu a:hover {
-    background-color: var(--bg-hover);
-    border-color: var(--primary-blue);
-    color: var(--primary-blue);
-}
-
-.nav-menu a.active {
-    background-color: var(--primary-blue);
-    color: white;
-    border-color: var(--primary-blue);
-}
-
 /* === DEVELOPER CREDIT === */
 .developer-credit {
     position: fixed;

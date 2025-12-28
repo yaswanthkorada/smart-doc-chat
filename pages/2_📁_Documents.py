@@ -155,15 +155,6 @@ st.markdown("""
 
 @require_auth
 def documents_page():
-    # Navigation menu (accessible even when sidebar is collapsed)
-    st.markdown("""
-    <div class="nav-menu">
-        <a href="/" title="Chat">🤖 Chat</a>
-        <a href="/Documents" class="active" title="Documents">📁 Documents</a>
-        <a href="/Settings" title="Settings">⚙️ Settings</a>
-    </div>
-    """, unsafe_allow_html=True)
-    
     render_sidebar()
     
     # Logo and header
