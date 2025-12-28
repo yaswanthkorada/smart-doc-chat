@@ -485,6 +485,37 @@ def main():
         if st.button("☰", key="toggle_sidebar_fallback", help="Toggle sidebar"):
             st.session_state["sidebar_open"] = not st.session_state.get("sidebar_open", True)
             st.rerun()
+
+    # Sync native Streamlit sidebar state via lightweight JS
+    # Ensures hamburger toggle opens/closes the real sidebar
+    desired_state = st.session_state.get("sidebar_open", True)
+    open_js = """
+            <script>
+            (function(){
+                try {
+                    const openSel = '[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"], button[aria-label*="Open sidebar"], button[aria-label*="Expand sidebar"], button[aria-label*="Show sidebar"]';
+                    const closeSel = 'button[aria-label*="Close sidebar"], [data-testid="stSidebarClose"], button[aria-label*="Hide sidebar"]';
+                    const openBtn = document.querySelector(openSel);
+                    const closeBtn = document.querySelector(closeSel);
+                    // Attempt to open if collapsed
+                    if (openBtn) { openBtn.click(); }
+                } catch(e) {}
+            })();
+            </script>
+    """
+    close_js = """
+            <script>
+            (function(){
+                try {
+                    const closeSel = 'button[aria-label*="Close sidebar"], [data-testid="stSidebarClose"], button[aria-label*="Hide sidebar"]';
+                    const closeBtn = document.querySelector(closeSel);
+                    if (closeBtn) { closeBtn.click(); }
+                } catch(e) {}
+            })();
+            </script>
+    """
+
+    st.markdown(open_js if desired_state else close_js, unsafe_allow_html=True)
     
     # Render sidebar
     render_sidebar()

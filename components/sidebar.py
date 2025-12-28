@@ -7,7 +7,10 @@ from config import config
 
 def render_sidebar():
     """Render sidebar with conversation history and controls"""
-    
+    # Only render when sidebar is open (session-controlled)
+    if not st.session_state.get("sidebar_open", True):
+        return
+
     with st.sidebar:
         # User info
         st.markdown(f"### 👤 {st.session_state.get('username', 'User')}")
