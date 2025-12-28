@@ -449,7 +449,7 @@ def main():
         ai_provider = st.selectbox(
             "🤖 AI Model",
             options=["gemini", "openai"],
-            index=0 if config.AI_PROVIDER == "gemini" else 1,
+            index=1 if config.AI_PROVIDER == "openai" else 0,
             help="Choose AI provider: Gemini (Free 1000 req/day) or OpenAI (Paid)",
             key="ai_provider_selector"
         )
@@ -584,7 +584,7 @@ def main():
         )
         
         # Get selected provider from session state (set by sidebar dropdown)
-        selected_provider = st.session_state.get('ai_provider', 'gemini')
+        selected_provider = st.session_state.get('ai_provider', config.AI_PROVIDER)
         
         # Update RAG engine provider if it changed
         if selected_provider != rag_engine.current_ai_provider:

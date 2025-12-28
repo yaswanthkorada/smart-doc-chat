@@ -3,6 +3,7 @@ from datetime import datetime
 from utils.database import db_manager
 from components.auth import logout
 from loguru import logger
+from config import settings as config
 
 def render_sidebar():
     """Render sidebar with conversation history and controls"""
@@ -34,7 +35,7 @@ def render_sidebar():
         
         # Initialize provider in session state if not set
         if 'ai_provider' not in st.session_state:
-            st.session_state.ai_provider = "gemini"
+            st.session_state.ai_provider = config.AI_PROVIDER
         
         provider_options = {
             "🌟 Gemini (Free)": "gemini",
