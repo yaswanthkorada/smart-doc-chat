@@ -62,17 +62,32 @@ class Config:
     GEMINI_MODEL = get_config_value("GEMINI_MODEL", "gemini-2.0-flash-exp")
     GEMINI_EMBEDDING_MODEL = get_config_value("GEMINI_EMBEDDING_MODEL", "models/embedding-001")
     
-    # Database - Try both connection_string and direct DATABASE_URL
-    DATABASE_URL = get_config_value("DATABASE_URL", secrets_key="database.connection_string")
-    if not DATABASE_URL:
-        DATABASE_URL = "sqlite:///./data/rag_app.db"
-    
     # Supabase
     SUPABASE_URL = get_config_value("SUPABASE_URL", secrets_key="supabase.url")
     SUPABASE_KEY = get_config_value("SUPABASE_KEY", secrets_key="supabase.key")
     SUPABASE_SERVICE_KEY = get_config_value("SUPABASE_SERVICE_KEY", secrets_key="supabase.service_role_key")
     SUPABASE_PROJECT_ID = get_config_value("SUPABASE_PROJECT_ID", secrets_key="supabase.project_id")
     SUPABASE_BUCKET = get_config_value("SUPABASE_BUCKET", "documents", secrets_key="supabase.bucket")
+    SUPABASE_DB_PASSWORD = get_config_value("SUPABASE_DB_PASSWORD", secrets_key="supabase.db_password")
+    
+    # Database - Try multiple sources
+    DATABASE_URL = get_config_value("DATABASE_URL", secrets_key="database.connection_string")
+    
+    # If DATABASE_URL not set, try to construct from Supabase credentials
+    if not DATABASE_URL and SUPABASE_URL and SUPABASE_DB_PASSWORD:
+        # Extract project ref from Supabase URL (format: https://xxxxx.supabase.co)
+        try:
+            if SUPABASE_URL:
+                project_ref = SUPABASE_URL.replace("https://", "").replace(".supabase.co", "")
+                # Construct PostgreSQL connection string
+                # Format: postgresql://postgres:[password]@db.[project-ref].supabase.co:5432/postgres
+                DATABASE_URL = f"postgresql://postgres:{SUPABASE_DB_PASSWORD}@db.{project_ref}.supabase.co:5432/postgres"
+        except Exception as e:
+            pass
+    
+    # Fallback to SQLite for local development
+    if not DATABASE_URL:
+        DATABASE_URL = "sqlite:///./data/rag_app.db"
     
     # Vector Database
     VECTOR_DB_TYPE = get_config_value("VECTOR_DB_TYPE", "chromadb")

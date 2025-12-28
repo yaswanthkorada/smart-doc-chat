@@ -5,6 +5,7 @@ from datetime import datetime
 import bcrypt
 import uuid
 import urllib.parse
+import sqlalchemy
 from config import config
 from loguru import logger
 
@@ -209,37 +210,72 @@ class DatabaseManager:
     """Database manager for all operations"""
     
     def __init__(self, db_url: str = None):
-        if db_url is None:
-            db_url = config.DATABASE_URL
-        
-        # Handle password encoding in PostgreSQL URLs
-        if db_url.startswith("postgresql://"):
-            db_url = self._encode_postgres_password(db_url)
-        
-        logger.info(f"Initializing database: {db_url.replace(db_url.split('@')[0].split(':')[-1], '***') if '@' in db_url else db_url}")
-        self.engine = create_engine(db_url, echo=config.DEBUG)
-        Base.metadata.create_all(self.engine)
-        self.SessionLocal = sessionmaker(bind=self.engine)
-        logger.info("Database initialized successfully")
+        try:
+            if db_url is None:
+                db_url = config.DATABASE_URL
+            
+            # Handle password encoding in PostgreSQL URLs
+            if db_url.startswith("postgresql://"):
+                db_url = self._encode_postgres_password(db_url)
+            
+            logger.info(f"Initializing database: {db_url.replace(db_url.split('@')[0].split(':')[-1], '***') if '@' in db_url else db_url}")
+            
+            # Add connection arguments for better reliability
+            engine_args = {"echo": config.DEBUG}
+            
+            # For PostgreSQL, add connection pool settings
+            if db_url.startswith("postgresql://"):
+                engine_args.update({
+                    "pool_pre_ping": True,  # Verify connections before using
+                    "pool_recycle": 3600,   # Recycle connections after 1 hour
+                    "connect_args": {
+                        "connect_timeout": 10,
+                        "options": "-c timezone=utc"
+                    }
+                })
+            
+            self.engine = create_engine(db_url, **engine_args)
+            
+            # Test the connection before creating tables
+            with self.engine.connect() as conn:
+                conn.execute(sqlalchemy.text("SELECT 1"))
+            
+            Base.metadata.create_all(self.engine)
+            self.SessionLocal = sessionmaker(bind=self.engine)
+            logger.info("Database initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize database: {e}")
+            logger.error(f"Database URL format: {db_url.split('@')[1] if '@' in db_url else 'local SQLite'}")
+            # Re-raise to prevent silent failures
+            raise
     
     def _encode_postgres_password(self, db_url: str) -> str:
         """Encode password in PostgreSQL URL if it contains special characters"""
         try:
             # Parse: postgresql://user:password@host:port/database
-            if "://" not in db_url or "@" not in db_url:
+            if "://" not in db_url:
                 return db_url
             
-            # Split URL into parts
             protocol, rest = db_url.split("://", 1)
-            credentials, host_db = rest.split("@", 1)
+            
+            # Find the LAST @ which separates credentials from host
+            # This handles passwords that contain @ symbols
+            last_at_index = rest.rfind("@")
+            if last_at_index == -1:
+                return db_url
+            
+            credentials = rest[:last_at_index]
+            host_db = rest[last_at_index + 1:]
             
             if ":" not in credentials:
                 return db_url
             
+            # Split username and password (password may contain :)
             username, password = credentials.split(":", 1)
             
             # Only encode if password contains special characters and isn't already encoded
-            if any(char in password for char in ['@', ':', '/', '?', '#', '[', ']', '%']) and '%' not in password:
+            if any(char in password for char in ['@', ':', '/', '?', '#', '[', ']']) and '%' not in password:
                 encoded_password = urllib.parse.quote_plus(password)
                 return f"{protocol}://{username}:{encoded_password}@{host_db}"
             
