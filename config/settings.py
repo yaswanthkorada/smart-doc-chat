@@ -54,7 +54,7 @@ class Config:
     
     # OpenAI - Try both direct and nested secrets
     OPENAI_API_KEY = get_config_value("OPENAI_API_KEY", secrets_key="api_keys.OPENAI_API_KEY")
-    OPENAI_MODEL = get_config_value("OPENAI_MODEL", "gpt-4o-mini")
+    OPENAI_MODEL = get_config_value("OPENAI_MODEL", "gpt-4.1-nano")
     OPENAI_EMBEDDING_MODEL = get_config_value("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
     
     # Google Gemini - Try both direct and nested secrets
