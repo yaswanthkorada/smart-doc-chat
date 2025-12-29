@@ -935,3 +935,51 @@ button[aria-label*="Logout"]:hover {
 .developer-credit a:hover {
     text-decoration: underline;
 }
+
+/* ==== USAGE CARD: FORCE READABLE TEXT ==== */
+/* Fix for faint/invisible metric text in Usage section */
+
+/* Scoped container for Usage area */
+#usageSection, .usage-section {
+    background: #FFFFFF !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 10px !important;
+    padding: 16px !important;
+}
+
+/* Reset any accidental opacity/filters within Usage card */
+#usageSection *, .usage-section * {
+    color: var(--text-dark) !important;   /* #111827 */
+    opacity: 1 !important;
+    filter: none !important;
+    mix-blend-mode: normal !important;
+}
+
+/* Streamlit Metric: label styling */
+[data-testid="stMetric"] [data-testid="stMetricLabel"],
+.stMetric [data-testid="stMetricLabel"] {
+    color: #374151 !important;            /* dark gray */
+    font-weight: 600 !important;
+    opacity: 1 !important;
+}
+
+/* Streamlit Metric: value styling */
+[data-testid="stMetric"] [data-testid="stMetricValue"],
+.stMetric [data-testid="stMetricValue"] {
+    color: #111827 !important;            /* near-black */
+    font-weight: 700 !important;
+    opacity: 1 !important;
+}
+
+/* Metric container transparent background */
+[data-testid="stMetric"], .stMetric {
+    background: transparent !important;
+}
+
+/* Safety reset for any faded text */
+.usage-section p, .usage-section span,
+#usageSection p, #usageSection span {
+    opacity: 1 !important;
+    filter: none !important;
+    color: var(--text-dark) !important;
+}

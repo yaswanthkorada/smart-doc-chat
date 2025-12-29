@@ -97,6 +97,7 @@ def render_sidebar():
         st.divider()
         
         # Storage info
+        st.markdown('<div id="usageSection" class="usage-section">', unsafe_allow_html=True)
         st.markdown("### 📊 Usage")
         
         if user_id:
@@ -113,6 +114,8 @@ def render_sidebar():
             
             st.metric("Documents", len(user_docs))
             st.metric("Storage", f"{total_size:.2f} MB")
+        
+        st.markdown('</div>', unsafe_allow_html=True)
         
         # Document Storage Quick View
         st.divider()
