@@ -28,6 +28,36 @@ except FileNotFoundError:
     logger.warning("styles.css not found, using default styles")
     pass
 
+# Suppress Streamlit 1.52.x sidebar theme warnings (harmless console noise)
+st.markdown("""
+    <script>
+    (function() {
+        const originalWarn = console.warn;
+        const originalError = console.error;
+        const suppressPatterns = [
+            /Invalid color passed for.*in theme\.sidebar/,
+            /widgetBackgroundColor/,
+            /widgetBorderColor/,
+            /skeletonBackgroundColor/
+        ];
+        
+        console.warn = function(...args) {
+            const message = args.join(' ');
+            if (!suppressPatterns.some(pattern => pattern.test(message))) {
+                originalWarn.apply(console, args);
+            }
+        };
+        
+        console.error = function(...args) {
+            const message = args.join(' ');
+            if (!suppressPatterns.some(pattern => pattern.test(message))) {
+                originalError.apply(console, args);
+            }
+        };
+    })();
+    </script>
+""", unsafe_allow_html=True)
+
 # Legacy CSS for main content styling
 st.markdown("""
     <style>

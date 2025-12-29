@@ -7,6 +7,10 @@ secondaryBackgroundColor = "#F8FAFC"
 textColor = "#111827"
 font = "sans serif"
 
+[client]
+showErrorDetails = false
+toolbarMode = "minimal"
+
 [server]
 headless = true
 enableCORS = false
