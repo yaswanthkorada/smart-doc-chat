@@ -58,6 +58,30 @@ st.markdown("""
     </script>
 """, unsafe_allow_html=True)
 
+# Query-param toggle handler (runs before layout)
+params = st.query_params
+if "toggleSidebar" in params:
+    st.session_state["sidebar_open"] = not st.session_state.get("sidebar_open", True)
+    # Clear the param to avoid repeat toggles on refresh
+    st.query_params.clear()
+
+# Always-visible floating toggle (works even if native «/» disappears)
+st.markdown("""
+<button id="appSidebarToggle" class="app-sidebar-toggle" title="Toggle sidebar">☰</button>
+<script>
+  (function() {
+    var btn = document.getElementById('appSidebarToggle');
+    if (btn) {
+      btn.onclick = function() {
+        const url = new URL(window.location.href);
+        url.searchParams.set('toggleSidebar', '1');
+        window.location.replace(url.toString());
+      };
+    }
+  })();
+</script>
+""", unsafe_allow_html=True)
+
 # Legacy CSS for main content styling
 st.markdown("""
     <style>
@@ -474,21 +498,14 @@ st.markdown("""
 def main():
     """Main application"""
     
-    # Track sidebar state for backup toggle
+    # Track sidebar state
     if "sidebar_open" not in st.session_state:
         st.session_state["sidebar_open"] = True
-    
-    # Backup toggle button (always visible, works even if native arrow fails)
-    toggle_col, spacer_col = st.columns([0.08, 0.92])
-    with toggle_col:
-        if st.button("☰", key="backup_sidebar_toggle", help="Toggle sidebar"):
-            st.session_state["sidebar_open"] = not st.session_state["sidebar_open"]
-            st.rerun()
     
     # Render sidebar only when open (prevents ghost strip)
     if st.session_state.get("sidebar_open", True):
         render_sidebar()
-    # Note: Native Streamlit toggle will still work; this is just a backup
+    # Note: Native Streamlit toggle (« / ») and floating ☰ button both work
     
     # Logo and header
     col_logo, col_title = st.columns([1, 11])

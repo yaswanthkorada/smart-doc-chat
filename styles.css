@@ -51,10 +51,9 @@ header[data-testid="stHeader"],
     transition: padding-left 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* === BACKUP TOGGLE BUTTON STYLING === */
-/* Fixed position at top-left, always visible */
-.stButton[data-testid*="backup_sidebar_toggle"] button,
-button[key="backup_sidebar_toggle"] {
+/* === FLOATING BACKUP TOGGLE – ROBUST ID SELECTOR === */
+/* Always visible, works even if native arrow fails */
+.app-sidebar-toggle {
     position: fixed !important;
     top: 12px !important;
     left: 12px !important;
@@ -63,24 +62,64 @@ button[key="backup_sidebar_toggle"] {
     height: 48px !important;
     border-radius: 8px !important;
     background: var(--primary-blue) !important;
-    color: white !important;
+    color: #FFFFFF !important;
     font-size: 24px !important;
     border: none !important;
     box-shadow: var(--shadow-md) !important;
     cursor: pointer !important;
     transition: all 200ms ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
-.stButton[data-testid*="backup_sidebar_toggle"] button:hover,
-button[key="backup_sidebar_toggle"]:hover {
+.app-sidebar-toggle:hover {
     background: var(--primary-hover) !important;
     transform: scale(1.05) !important;
     box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15) !important;
 }
 
-.stButton[data-testid*="backup_sidebar_toggle"] button:active,
-button[key="backup_sidebar_toggle"]:active {
+.app-sidebar-toggle:focus {
+    outline: 2px solid rgba(59, 130, 246, 0.3) !important;
+    outline-offset: 2px !important;
+}
+
+.app-sidebar-toggle:active {
     transform: scale(0.95) !important;
+}
+
+/* === NATIVE COLLAPSED/EXPAND CONTROL === */
+/* Keep visible and clickable after collapse */
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"] {
+    position: fixed !important;
+    top: 64px !important;  /* below header and floating toggle */
+    left: 16px !important;
+    z-index: 9998 !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.08) !important;
+    color: #111827 !important;
+    padding: 6px 8px !important;
+}
+
+[data-testid="stSidebarCollapsedControl"]:hover,
+[data-testid="collapsedControl"]:hover {
+    background: #F8FAFC !important;
+    border-color: #3B82F6 !important;
+}
+
+/* === REMOVE GHOST COLLAPSED SIDEBAR STRIP === */
+[data-testid="stSidebarCollapsed"],
+.stSidebar.stSidebarCollapsed,
+.st-emotion-cache-sidebarCollapsed {
+    width: 0 !important;
+    min-width: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
 }
 
 /* === MAIN LAYOUT === */
