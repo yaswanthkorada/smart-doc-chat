@@ -59,11 +59,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Query-param toggle handler (runs before layout)
-params = st.query_params
+params = st.experimental_get_query_params()
 if "toggleSidebar" in params:
     st.session_state["sidebar_open"] = not st.session_state.get("sidebar_open", True)
     # Clear the param to avoid repeat toggles on refresh
-    st.query_params.clear()
+    st.experimental_set_query_params()
 
 # Always-visible floating toggle (works even if native «/» disappears)
 st.markdown("""
