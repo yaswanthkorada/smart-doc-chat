@@ -563,14 +563,16 @@ section.st-emotion-cache-stSidebarCollapsed {
 
 /* === NATIVE SIDEBAR TOGGLE BUTTON === */
 /* Target Streamlit's native collapse/expand arrow button - always keep visible */
-button[kind="header"],
-button[data-testid="collapsedControl"],
-button[data-testid="stSidebarCollapsedControl"],
-button[aria-label*="sidebar"],
-button[aria-label*="Sidebar"],
-[data-testid="baseButton-header"],
+/* Sidebar expanded state - collapse button (inside sidebar) */
+[data-testid="stSidebar"] button[kind="header"],
 [data-testid="stSidebar"] > div > button:first-child,
-[data-testid="stSidebar"] button[kind="header"] {
+section[data-testid="stSidebar"] button[kind="header"],
+button[kind="header"][aria-label*="Close"],
+button[kind="header"][aria-label*="close"],
+button[kind="header"][aria-label*="Hide"],
+button[kind="header"][aria-label*="hide"],
+button[kind="header"][aria-label*="Collapse"],
+button[kind="header"][aria-label*="collapse"] {
     background-color: var(--bg-white) !important;
     color: var(--primary-blue) !important;
     border: 1px solid var(--border-gray) !important;
@@ -595,14 +597,51 @@ button[aria-label*="Sidebar"],
     left: 16px !important;
 }
 
-button[kind="header"]:hover,
+/* Sidebar collapsed state - expand button (outside sidebar) */
+button[data-testid="collapsedControl"],
+button[data-testid="stSidebarCollapsedControl"],
+button[kind="header"][aria-label*="Open"],
+button[kind="header"][aria-label*="open"],
+button[kind="header"][aria-label*="Show"],
+button[kind="header"][aria-label*="show"],
+button[kind="header"][aria-label*="Expand"],
+button[kind="header"][aria-label*="expand"],
+[data-testid="baseButton-header"],
+button[aria-label*="sidebar"][kind="header"],
+button[aria-label*="Sidebar"][kind="header"] {
+    background-color: var(--bg-white) !important;
+    color: var(--primary-blue) !important;
+    border: 1px solid var(--border-gray) !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.08) !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    width: 36px !important;
+    height: 36px !important;
+    cursor: pointer !important;
+    transition: all 120ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: all !important;
+    position: fixed !important;
+    top: 16px !important;
+    left: 16px !important;
+}
+
+/* Hover states for all sidebar toggle buttons */
+[data-testid="stSidebar"] button[kind="header"]:hover,
+[data-testid="stSidebar"] > div > button:first-child:hover,
 button[data-testid="collapsedControl"]:hover,
 button[data-testid="stSidebarCollapsedControl"]:hover,
-button[aria-label*="sidebar"]:hover,
-button[aria-label*="Sidebar"]:hover,
-[data-testid="baseButton-header"]:hover,
-[data-testid="stSidebar"] > div > button:first-child:hover,
-[data-testid="stSidebar"] button[kind="header"]:hover {
+button[kind="header"][aria-label*="sidebar"]:hover,
+button[kind="header"][aria-label*="Sidebar"]:hover,
+button[kind="header"]:hover,
+[data-testid="baseButton-header"]:hover {
     background-color: var(--bg-hover) !important;
     color: var(--primary-blue) !important;
     border-color: var(--primary-blue) !important;
@@ -610,6 +649,8 @@ button[aria-label*="Sidebar"]:hover,
     transform: scale(1.05) !important;
 }
 
+/* Focus states for accessibility */
+[data-testid="stSidebar"] button[kind="header"]:focus,
 button[kind="header"]:focus,
 button[data-testid="collapsedControl"]:focus,
 button[data-testid="stSidebarCollapsedControl"]:focus {
@@ -618,15 +659,19 @@ button[data-testid="stSidebarCollapsedControl"]:focus {
 }
 
 /* Ensure toggle button icon is visible and sized correctly */
+[data-testid="stSidebar"] button[kind="header"] svg,
 button[kind="header"] svg,
 button[data-testid="collapsedControl"] svg,
 button[data-testid="stSidebarCollapsedControl"] svg,
 [data-testid="baseButton-header"] svg,
-[data-testid="stSidebar"] button[kind="header"] svg {
+button[aria-label*="sidebar"] svg,
+button[aria-label*="Sidebar"] svg {
     width: 20px !important;
     height: 20px !important;
-    fill: currentColor !important;
-    color: currentColor !important;
+    fill: var(--primary-blue) !important;
+    color: var(--primary-blue) !important;
+    opacity: 1 !important;
+    display: block !important;
 }
 
 /* === REMOVE GHOST COLLAPSED SIDEBAR STRIP === */
