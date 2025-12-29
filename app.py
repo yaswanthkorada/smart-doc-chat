@@ -20,10 +20,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Initialize session state for sidebar toggle
-if "sidebar_open" not in st.session_state:
-    st.session_state["sidebar_open"] = True
-
 # Load global CSS - MUST BE FIRST THING AFTER set_page_config
 try:
     with open("styles.css", "r", encoding="utf-8") as f:
@@ -32,39 +28,9 @@ except FileNotFoundError:
     logger.warning("styles.css not found, using default styles")
     pass
 
-# Custom CSS (legacy - can be removed once styles.css is confirmed working)
+# Legacy CSS for main content styling
 st.markdown("""
     <style>
-    /* Fallback sidebar toggle button styling */
-    button[key="toggle_sidebar_fallback"],
-    [data-testid="column"] > div:first-child button:first-child {
-        position: fixed !important;
-        top: 16px !important;
-        left: 16px !important;
-        z-index: 999998 !important;
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-        padding: 8px !important;
-        background: #FFFFFF !important;
-        color: #111827 !important;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 8px !important;
-        box-shadow: 0 2px 8px rgba(16, 24, 40, 0.08) !important;
-        font-size: 20px !important;
-        line-height: 1 !important;
-        cursor: pointer !important;
-        transition: all 120ms cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-    
-    button[key="toggle_sidebar_fallback"]:hover,
-    [data-testid="column"] > div:first-child button:first-child:hover {
-        background: #F8FAFC !important;
-        border-color: #3B82F6 !important;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25) !important;
-        transform: scale(1.05) !important;
-    }
     
     /* Main page background - white */
     .main, .stApp {
@@ -477,45 +443,7 @@ st.markdown("""
 @require_auth
 def main():
     """Main application"""
-    
-    # Fallback sidebar toggle (visible when native arrow is not accessible)
-    # This creates a hamburger button that users can always click to show/hide sidebar
-    toggle_col1, toggle_col2 = st.columns([0.05, 0.95])
-    with toggle_col1:
-        if st.button("☰", key="toggle_sidebar_fallback", help="Toggle sidebar"):
-            st.session_state["sidebar_open"] = not st.session_state.get("sidebar_open", True)
-            st.rerun()
-
-    # Sync native Streamlit sidebar state via lightweight JS
-    # Ensures hamburger toggle opens/closes the real sidebar
-    desired_state = st.session_state.get("sidebar_open", True)
-    open_js = """
-            <script>
-            (function(){
-                try {
-                    const openSel = '[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"], button[aria-label*="Open sidebar"], button[aria-label*="Expand sidebar"], button[aria-label*="Show sidebar"]';
-                    const closeSel = 'button[aria-label*="Close sidebar"], [data-testid="stSidebarClose"], button[aria-label*="Hide sidebar"]';
-                    const openBtn = document.querySelector(openSel);
-                    const closeBtn = document.querySelector(closeSel);
-                    // Attempt to open if collapsed
-                    if (openBtn) { openBtn.click(); }
-                } catch(e) {}
-            })();
-            </script>
-    """
-    close_js = """
-            <script>
-            (function(){
-                try {
-                    const closeSel = 'button[aria-label*="Close sidebar"], [data-testid="stSidebarClose"], button[aria-label*="Hide sidebar"]';
-                    const closeBtn = document.querySelector(closeSel);
-                    if (closeBtn) { closeBtn.click(); }
-                } catch(e) {}
-            })();
-            </script>
-    """
-
-    st.markdown(open_js if desired_state else close_js, unsafe_allow_html=True)
+    # Sidebar toggle handled by native Streamlit controls (styled in CSS)
     
     # Render sidebar
     render_sidebar()
