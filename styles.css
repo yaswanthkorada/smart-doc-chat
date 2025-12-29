@@ -18,16 +18,18 @@
     --focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 
-/* === REMOVE TOP BLACK HEADER === */
+/* === KEEP HEADER VISIBLE (for native sidebar toggle) === */
+/* The native «/» collapse control lives in/near the header */
+/* DO NOT hide it or the toggle will disappear after first collapse */
 [data-testid="stHeader"],
 header[data-testid="stHeader"],
 .stHeader {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    min-height: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    min-height: 48px !important;
     background: transparent !important;
     box-shadow: none !important;
+    border-bottom: none !important;
 }
 
 /* Prevent any header bar from pushing content */
@@ -47,6 +49,38 @@ header[data-testid="stHeader"],
     max-width: 100% !important;
     padding-left: 60px !important; /* Space for toggle button */
     transition: padding-left 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* === BACKUP TOGGLE BUTTON STYLING === */
+/* Fixed position at top-left, always visible */
+.stButton[data-testid*="backup_sidebar_toggle"] button,
+button[key="backup_sidebar_toggle"] {
+    position: fixed !important;
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 999999 !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 8px !important;
+    background: var(--primary-blue) !important;
+    color: white !important;
+    font-size: 24px !important;
+    border: none !important;
+    box-shadow: var(--shadow-md) !important;
+    cursor: pointer !important;
+    transition: all 200ms ease !important;
+}
+
+.stButton[data-testid*="backup_sidebar_toggle"] button:hover,
+button[key="backup_sidebar_toggle"]:hover {
+    background: var(--primary-hover) !important;
+    transform: scale(1.05) !important;
+    box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15) !important;
+}
+
+.stButton[data-testid*="backup_sidebar_toggle"] button:active,
+button[key="backup_sidebar_toggle"]:active {
+    transform: scale(0.95) !important;
 }
 
 /* === MAIN LAYOUT === */
@@ -563,7 +597,8 @@ section.st-emotion-cache-stSidebarCollapsed {
 
 /* === NATIVE SIDEBAR TOGGLE BUTTON === */
 /* Target Streamlit's native collapse/expand arrow button - always keep visible */
-/* Sidebar expanded state - collapse button (inside sidebar) */
+
+/* Sidebar expanded state - collapse button (« inside sidebar) */
 [data-testid="stSidebar"] button[kind="header"],
 [data-testid="stSidebar"] > div > button:first-child,
 section[data-testid="stSidebar"] button[kind="header"],
@@ -597,9 +632,12 @@ button[kind="header"][aria-label*="collapse"] {
     left: 16px !important;
 }
 
-/* Sidebar collapsed state - expand button (outside sidebar) */
+/* Sidebar collapsed state - expand button (» outside sidebar) */
+/* CRITICAL: These selectors ensure the button appears AFTER collapse */
 button[data-testid="collapsedControl"],
 button[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"],
+[data-testid="stSidebarCollapsedControl"],
 button[kind="header"][aria-label*="Open"],
 button[kind="header"][aria-label*="open"],
 button[kind="header"][aria-label*="Show"],

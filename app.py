@@ -473,10 +473,22 @@ st.markdown("""
 @require_auth
 def main():
     """Main application"""
-    # Sidebar toggle handled by native Streamlit controls (styled in CSS)
     
-    # Render sidebar
-    render_sidebar()
+    # Track sidebar state for backup toggle
+    if "sidebar_open" not in st.session_state:
+        st.session_state["sidebar_open"] = True
+    
+    # Backup toggle button (always visible, works even if native arrow fails)
+    toggle_col, spacer_col = st.columns([0.08, 0.92])
+    with toggle_col:
+        if st.button("☰", key="backup_sidebar_toggle", help="Toggle sidebar"):
+            st.session_state["sidebar_open"] = not st.session_state["sidebar_open"]
+            st.rerun()
+    
+    # Render sidebar only when open (prevents ghost strip)
+    if st.session_state.get("sidebar_open", True):
+        render_sidebar()
+    # Note: Native Streamlit toggle will still work; this is just a backup
     
     # Logo and header
     col_logo, col_title = st.columns([1, 11])
