@@ -42,8 +42,8 @@ def login_page():
     st.title("🔐 Sign In")
     
     with st.form("login_form"):
-        username = st.text_input("Username", key="login_username", placeholder="Enter your username")
-        password = st.text_input("Password", type="password", key="login_password", placeholder="Enter your password")
+        username = st.text_input("Username", key="login_username")
+        password = st.text_input("Password", type="password", key="login_password")
         
         col1, col2 = st.columns(2)
         with col1:

@@ -624,6 +624,20 @@ section.st-emotion-cache-stSidebarCollapsed {
     color: var(--text-dark) !important;
 }
 
+/* Sidebar metrics - ensure text is visible */
+[data-testid="stSidebar"] [data-testid="stMetric"],
+[data-testid="stSidebar"] [data-testid="stMetricLabel"],
+[data-testid="stSidebar"] [data-testid="stMetricValue"],
+[data-testid="stSidebar"] .stMetric label,
+[data-testid="stSidebar"] .stMetric [data-testid="stMetricValue"] {
+    color: var(--text-dark) !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stMetricValue"] {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+}
+
 [data-testid="stSidebar"] input {
     background-color: var(--bg-white) !important;
     color: var(--text-dark) !important;
