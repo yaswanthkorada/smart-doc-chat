@@ -1,0 +1,357 @@
+app page console:-
+INITIAL -> (6, 0, ) -> BOOTING
+index-B59N3yFD.js:202 BOOTING -> (5, 0, ) -> RUNNING
+index-B59N3yFD.js:34 Unrecognized feature: 'ambient-light-sensor'.
+Pe @ index-B59N3yFD.js:34Understand this warning
+index-B59N3yFD.js:34 Unrecognized feature: 'battery'.
+Pe @ index-B59N3yFD.js:34Understand this warning
+index-B59N3yFD.js:34 Unrecognized feature: 'document-domain'.
+Pe @ index-B59N3yFD.js:34Understand this warning
+index-B59N3yFD.js:34 Unrecognized feature: 'layout-animations'.
+Pe @ index-B59N3yFD.js:34Understand this warning
+index-B59N3yFD.js:34 Unrecognized feature: 'legacy-image-formats'.
+Pe @ index-B59N3yFD.js:34Understand this warning
+index-B59N3yFD.js:34 Unrecognized feature: 'oversized-images'.
+Pe @ index-B59N3yFD.js:34Understand this warning
+index-B59N3yFD.js:34 Unrecognized feature: 'vr'.
+Pe @ index-B59N3yFD.js:34Understand this warning
+index-B59N3yFD.js:34 Unrecognized feature: 'wake-lock'.
+Pe @ index-B59N3yFD.js:34Understand this warning
++/:1 An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46
+(anonymous) @ index.3bHSf9gi.js:46
+createEmotionTheme @ index.3bHSf9gi.js:46
+createTheme @ index.3bHSf9gi.js:46
+createSidebarTheme @ index.3bHSf9gi.js:46
+ThemedSidebar @ index.3bHSf9gi.js:143
+El @ index.3bHSf9gi.js:7
+Bl @ index.3bHSf9gi.js:9
+Wc @ index.3bHSf9gi.js:9
+Vc @ index.3bHSf9gi.js:9
+Df @ index.3bHSf9gi.js:9
+Sa @ index.3bHSf9gi.js:9
+Dc @ index.3bHSf9gi.js:9
+Pr @ index.3bHSf9gi.js:7
+(anonymous) @ index.3bHSf9gi.js:9Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for widgetBorderColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46
+(anonymous) @ index.3bHSf9gi.js:46
+createEmotionTheme @ index.3bHSf9gi.js:46
+createTheme @ index.3bHSf9gi.js:46
+createSidebarTheme @ index.3bHSf9gi.js:46
+ThemedSidebar @ index.3bHSf9gi.js:143
+El @ index.3bHSf9gi.js:7
+Bl @ index.3bHSf9gi.js:9
+Wc @ index.3bHSf9gi.js:9
+Vc @ index.3bHSf9gi.js:9
+Df @ index.3bHSf9gi.js:9
+Sa @ index.3bHSf9gi.js:9
+Dc @ index.3bHSf9gi.js:9
+Pr @ index.3bHSf9gi.js:7
+(anonymous) @ index.3bHSf9gi.js:9Understand this warning
+index.3bHSf9gi.js:46 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+parseColor @ index.3bHSf9gi.js:46
+(anonymous) @ index.3bHSf9gi.js:46
+createEmotionTheme @ index.3bHSf9gi.js:46
+createTheme @ index.3bHSf9gi.js:46
+createSidebarTheme @ index.3bHSf9gi.js:46
+ThemedSidebar @ index.3bHSf9gi.js:143
+El @ index.3bHSf9gi.js:7
+Bl @ index.3bHSf9gi.js:9
+Wc @ index.3bHSf9gi.js:9
+Vc @ index.3bHSf9gi.js:9
+Df @ index.3bHSf9gi.js:9
+Sa @ index.3bHSf9gi.js:9
+Dc @ index.3bHSf9gi.js:9
+Pr @ index.3bHSf9gi.js:7
+(anonymous) @ index.3bHSf9gi.js:9Understand this warning
+see still that side bar wrrows wa not shoing after copplise can you fix tis error it should aviable after copplosie also so that i can retyurn my side bar back can you check entire project find out errors and issues in this project and fix permently

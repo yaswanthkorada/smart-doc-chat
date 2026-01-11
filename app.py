@@ -4,7 +4,7 @@ from components.auth import auth_page, require_auth
 from components.sidebar import render_sidebar
 from components.chat_interface import render_chat_history, display_message
 from utils.database import db_manager
-from utils.rag_engine import rag_engine
+from utils.agent_rag_engine import agent_rag_engine  # 🤖 Multi-Agent System
 from config import config
 from loguru import logger
 import json
@@ -640,18 +640,20 @@ def main():
         # Get selected provider from session state (set by sidebar dropdown)
         selected_provider = st.session_state.get('ai_provider', config.AI_PROVIDER)
         
-        # Update RAG engine provider if it changed
-        if selected_provider != rag_engine.current_ai_provider:
-            with st.spinner(f"🔄 Switching to {selected_provider.upper()}..."):
-                success = rag_engine.update_provider(selected_provider)
-                if not success:
-                    st.error(f"Failed to switch to {selected_provider}. Using current provider.")
-                    selected_provider = rag_engine.current_ai_provider
+        # Update Multi-Agent RAG engine provider if it changed
+        if selected_provider != agent_rag_engine.current_provider:
+            with st.spinner(f"🔄 Switching Multi-Agent System to {selected_provider.upper()}..."):
+                agent_rag_engine.update_provider(selected_provider)
+                selected_provider = agent_rag_engine.current_provider
         
         selected_docs = st.session_state.get('selected_documents', [])
         provider_emoji = "✨" if selected_provider == "gemini" else "🧠"
         
-        with st.spinner(f"{provider_emoji} Thinking with {selected_provider.upper()}..."):
+        # 🤖 Show Multi-Agent System working
+        agent_status = st.empty()
+        agent_status.info("🤖 **Multi-Agent System Activated**\n\n🔍 Retrieval Agent: Searching for relevant information...\n✍️ Generation Agent: Standing by...")
+        
+        with st.spinner(f"{provider_emoji} AI Agents working with {selected_provider.upper()}..."):
             import time
             start_time = time.time()
             
@@ -685,23 +687,22 @@ def main():
                 
                 # Regular query if not visualization
                 if not is_viz_request or 'current_visualization' not in st.session_state:
-                    # Use multi-document query if documents are selected
-                    if selected_docs:
-                        response, sources, tokens = rag_engine.query_multi_documents(
-                            user_id=st.session_state.user_id,
-                            query=user_input,
-                            doc_ids=selected_docs,
-                            conversation_id=current_conversation_id,
-                            ai_provider=selected_provider
-                        )
-                    else:
-                        # Default: search all documents
-                        response, sources, tokens = rag_engine.query(
-                            user_id=st.session_state.user_id,
-                            query=user_input,
-                            conversation_id=current_conversation_id,
-                            ai_provider=selected_provider
-                        )
+                    # 🤖 Use Multi-Agent System for querying
+                    result = agent_rag_engine.query(
+                        question=user_input,
+                        user_id=str(st.session_state.user_id),
+                        document_ids=selected_docs if selected_docs else None
+                    )
+                    
+                    response = result.get('response', 'Sorry, I encountered an error.')
+                    sources = result.get('sources', [])
+                    tokens = len(user_input.split()) + len(response.split())
+                    
+                    # Clear agent status
+                    agent_status.success("✅ **Multi-Agent System Complete**\n\n🔍 Retrieval Agent: Found relevant information ✓\n✍️ Generation Agent: Response created ✓")
+                    import time
+                    time.sleep(1)
+                    agent_status.empty()
                 
                 # Calculate response time
                 response_time = int((time.time() - start_time) * 1000)  # milliseconds

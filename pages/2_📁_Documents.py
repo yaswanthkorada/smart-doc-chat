@@ -5,7 +5,7 @@ from pathlib import Path
 from components.auth import require_auth, check_tier_limit
 from components.sidebar import render_sidebar
 from utils.database import db_manager
-from utils.rag_engine import rag_engine
+from utils.agent_rag_engine import agent_rag_engine  # 🤖 Multi-Agent System
 from utils.storage import storage
 from config import config
 from loguru import logger
@@ -307,11 +307,19 @@ def process_uploaded_files(uploaded_files, user_id):
             with open(temp_path, "wb") as f:
                 f.write(file.getbuffer())
             
-            # Process document
-            result = rag_engine.process_document(temp_path, user_id, file.name)
+            # 🤖 Process document with Multi-Agent System
+            result = agent_rag_engine.process_document(
+                file_path=str(temp_path),
+                user_id=str(user_id),
+                filename=file.name
+            )
             
-            st.success(f"✅ {file.name} processed successfully! ({result['chunks_created']} chunks)")
-            success_count += 1
+            if result.get('success'):
+                st.success(f"✅ {file.name} processed by AI agents! ({result['chunks_created']} chunks)")
+                success_count += 1
+            else:
+                st.error(f"❌ {file.name} processing failed: {result.get('error', 'Unknown error')}")
+                failed_files.append((file.name, result.get('error', 'Unknown error')))
             
         except Exception as e:
             logger.error(f"Error processing {file.name}: {e}")

@@ -32,6 +32,31 @@ def render_sidebar():
         
         st.divider()
         
+        # Multi-Agent System Indicator
+        st.markdown("### 🤖 Multi-Agent System")
+        st.success("**✅ ACTIVE**")
+        with st.expander("ℹ️ Agent Details"):
+            st.markdown("""
+            **3 Specialized AI Agents:**
+            
+            🔍 **Retrieval Agent**
+            - Searches documents
+            - Analyzes query intent
+            - Ranks by relevance
+            
+            ✍️ **Generation Agent**
+            - Creates responses
+            - Adds citations
+            - Validates accuracy
+            
+            📄 **Ingestion Agent**
+            - Processes documents
+            - Smart chunking
+            - Quality control
+            """)
+        
+        st.divider()
+        
         # AI Provider Selection
         st.markdown("### 🤖 AI Provider")
         
@@ -59,16 +84,16 @@ def render_sidebar():
         if new_provider != st.session_state.ai_provider:
             st.session_state.ai_provider = new_provider
             st.success(f"✅ Switched to {selected_provider.split()[1]}")
-            st.info("🔄 Both LLM and Embeddings updated!")
+            st.info("🔄 All agents updated with new provider!")
             st.rerun()
         
         # Show current model info
         if st.session_state.ai_provider == "gemini":
-            st.caption("📊 LLM: gemini-2.0-flash-exp")
+            st.caption("📊 All Agents: gemini-2.0-flash-exp")
             st.caption("🧮 Embeddings: models/embedding-001")
             st.caption("💰 Cost: $0/month")
         else:
-            st.caption("📊 LLM: gpt-4")
+            st.caption("📊 All Agents: gpt-4")
             st.caption("🧮 Embeddings: text-embedding-3-small")
             st.caption("💰 Pay-per-use")
         
