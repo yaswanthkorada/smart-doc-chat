@@ -247,8 +247,10 @@ class DatabaseManager:
         except Exception as e:
             logger.error(f"Failed to initialize database: {e}")
             logger.error(f"Database URL format: {db_url.split('@')[1] if '@' in db_url else 'local SQLite'}")
-            # Re-raise to prevent silent failures
-            raise
+            logger.warning("⚠️  Database connection failed - API will run without database (in-memory mode)")
+            # Don't crash - allow API to start without database
+            self.engine = None
+            self.SessionLocal = None
     
     def _encode_postgres_password(self, db_url: str) -> str:
         """Encode password in PostgreSQL URL if it contains special characters"""
@@ -284,8 +286,14 @@ class DatabaseManager:
             logger.warning(f"Could not encode password in URL: {e}")
             return db_url
     
+    def is_connected(self) -> bool:
+        """Check if database is connected"""
+        return self.engine is not None and self.SessionLocal is not None
+    
     def get_session(self):
         """Get database session"""
+        if not self.is_connected():
+            raise RuntimeError("Database is not connected. Please check your DATABASE_URL configuration.")
         return self.SessionLocal()
     
     # ==================== USER OPERATIONS ====================

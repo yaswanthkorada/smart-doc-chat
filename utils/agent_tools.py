@@ -8,7 +8,7 @@ import json
 from typing import List, Dict, Any
 from pathlib import Path
 from loguru import logger
-from crewai_tools import BaseTool
+from crewai.tools import BaseTool
 from pydantic import BaseModel, Field
 import PyPDF2
 import docx

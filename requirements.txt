@@ -1,8 +1,15 @@
 # Core Framework
 streamlit>=1.30.0
-python-dotenv==1.0.0
+python-dotenv>=1.1.1,<1.2.0
 certifi>=2024.0.0
 urllib3>=2.0.0
+
+# FastAPI Backend
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.6
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
 
 # Supabase Integration
 supabase>=2.0.0
@@ -15,7 +22,7 @@ langchain-google-genai==2.0.6
 langchain-experimental>=0.0.60
 openai>=1.54.0
 google-generativeai>=0.8.0,<0.9.0
-tiktoken==0.8.0
+tiktoken>=0.8.0
 importlib-metadata==8.4.0
 # langsmith  # Temporarily removed due to dependency conflicts and unavailability
 
@@ -34,12 +41,12 @@ langchain-huggingface>=0.1.0
 
 # Document Processing
 PyPDF2==3.0.1
-python-docx==1.1.0
+python-docx>=1.2.0
 python-pptx==0.6.23
 pandas==2.1.4
-openpyxl==3.1.2
-youtube-transcript-api==0.6.1
-beautifulsoup4==4.12.2
+openpyxl>=3.1.5
+youtube-transcript-api>=1.2.2
+beautifulsoup4>=4.12.3
 lxml==5.1.0
 
 # Code Highlighting & Analytics
@@ -55,7 +62,7 @@ PyMuPDF>=1.23.0
 Pillow>=10.0.0
 
 # Database
-sqlalchemy==2.0.25
+sqlalchemy>=2.0.27
 psycopg2-binary==2.9.9
 pymysql==1.1.0
 alembic==1.13.1
@@ -73,7 +80,7 @@ google-cloud-storage==2.14.0
 
 # Utils
 pyyaml==6.0.1
-requests==2.31.0
+requests>=2.32.5
 watchdog==4.0.0
 
 # Monitoring & Logging
@@ -89,7 +96,7 @@ streamlit-chat==0.1.1
 streamlit-option-menu==0.3.6
 
 # Development
-pytest==7.4.4
+pytest>=8.0.0
 pytest-cov==4.1.0
 black==23.12.1
 flake8==7.0.0
